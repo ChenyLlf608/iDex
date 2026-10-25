@@ -80,12 +80,21 @@ final class iDexUITests: XCTestCase {
             let close = app.buttons["close-record"]
             XCTAssertTrue(close.isHittable)
             attachScreenshot("record-cover-\(language)", app: app)
-            XCTAssertGreaterThanOrEqual(number.frame.minY - app.frame.minY, 100)
+            XCTAssertGreaterThanOrEqual(number.frame.minY - app.frame.minY, 96)
             XCTAssertTrue(app.frame.contains(close.frame))
             XCTAssertGreaterThan(close.frame.minY, app.frame.minY + app.frame.height * 0.8)
             XCTAssertGreaterThanOrEqual(close.frame.height, 44)
             XCTAssertFalse(close.frame.intersects(app.buttons["catalog-button"].frame))
             XCTAssertFalse(close.frame.intersects(app.buttons["read-button"].frame))
+            let footer = app.staticTexts["record-footer"]
+            XCTAssertTrue(footer.exists)
+            // The footer shares its row with the bottom screws. Both must
+            // remain above the shell's 12pt inset decorative line.
+            XCTAssertLessThanOrEqual(footer.frame.maxY, app.frame.maxY - 20)
+            let statsLabel = ["en": "Toggle base stats", "zhHans": "切换基础能力", "ja": "種族値の表示を切り替える"][language]!
+            app.buttons[statsLabel].tap()
+            XCTAssertLessThanOrEqual(footer.frame.maxY, app.frame.maxY - 20)
+            attachScreenshot("record-cover-stats-\(language)", app: app)
             close.tap()
             XCTAssertTrue(app.buttons["settings-button"].waitForExistence(timeout: 5))
         }

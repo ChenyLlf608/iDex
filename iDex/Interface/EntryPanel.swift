@@ -6,7 +6,9 @@ struct EntryPanel: View {
     @State private var showStats = false
 
     var body: some View {
-        VStack(spacing: onClose == nil ? 17 : 15) {
+        // Leave room for the footer inside the shell's inset border, even on
+        // the shorter interior display and with the taller CJK pixel fonts.
+        VStack(spacing: 10) {
             HStack(spacing: 12) {
                 Screw()
                 Text(store.text("POKÉMON RESEARCH", "宝可梦研究终端", "ポケモンリサーチ"))
@@ -83,7 +85,7 @@ struct EntryPanel: View {
                                     .font(PixelFont.font(size: store.language == .en ? 8 : 17, language: store.language))
                                     .lineSpacing(store.language == .en ? 7 : 5)
                                     .frame(maxWidth: .infinity, alignment: .leading)
-                            }.frame(height: 104)
+                            }.frame(minHeight: 64, idealHeight: 104, maxHeight: 104)
                         }
                     }
                 }
@@ -132,6 +134,7 @@ struct EntryPanel: View {
                 Text(store.text("SILPH CO. · PERSONAL FIELD SYSTEM", "西尔佛公司 · 个人野外系统", "シルフカンパニー · 個人用フィールドシステム"))
                     .font(PixelFont.font(size: store.language == .en ? 5 : 11, language: store.language))
                     .foregroundStyle(Color.black.opacity(0.45)).shadow(color: .white.opacity(0.18), radius: 0, y: 1)
+                    .accessibilityIdentifier("record-footer")
                 Spacer()
                 Screw()
             }.padding(.bottom, 24)

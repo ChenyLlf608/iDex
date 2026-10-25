@@ -96,7 +96,8 @@ struct ScannerLayoutTests {
         store.suspend()
     }
 
-    @Test func japaneseRecordFitsCoverAndExpandedLayouts() throws {
+    @Test(arguments: AppLanguage.allCases)
+    func recordsFitCoverAndExpandedLayouts(language: AppLanguage) throws {
         let savedLanguage = UserDefaults.standard.object(forKey: "idex.language")
         let savedViewed = UserDefaults.standard.object(forKey: "idex.lastViewed")
         let soundWasEnabled = DeviceAudio.shared.isSoundEnabled
@@ -107,7 +108,7 @@ struct ScannerLayoutTests {
             UserDefaults.standard.set(savedViewed, forKey: "idex.lastViewed")
         }
         let store = DexStore()
-        store.language = .ja
+        store.language = language
         // A long name and two type badges exercise the compact entry column.
         store.selected = PokemonCatalog.shared.pokemon(id: 71)
         for size in [CGSize(width: 466, height: 678), CGSize(width: 951, height: 669)] {
@@ -118,11 +119,17 @@ struct ScannerLayoutTests {
                 } else {
                     CompactRecordView(store: store)
                 }
-            }.frame(width: size.width, height: size.height))
+            }.frame(width: size.width, height: size.height)
+                .containerShape(UnevenRoundedRectangle(
+                    topLeadingRadius: expanded ? 55 : 8,
+                    bottomLeadingRadius: expanded ? 55 : 8,
+                    bottomTrailingRadius: expanded ? 55 : 59,
+                    topTrailingRadius: expanded ? 55 : 59
+                )))
             renderer.scale = 2
             let image = try #require(renderer.uiImage)
             #expect(image.size == size)
-            Attachment.record(image, named: "record-\(expanded ? "expanded" : "cover")-ja", as: .png)
+            Attachment.record(image, named: "record-\(expanded ? "expanded" : "cover")-\(language.rawValue)", as: .png)
         }
         store.suspend()
     }
