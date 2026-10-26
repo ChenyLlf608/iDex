@@ -1,0 +1,954 @@
+{
+  "source": "https://wiki.52poke.com",
+  "license": "CC BY-NC-SA 3.0",
+  "note": "Simplified Chinese dex entries PokeAPI does not carry. `official` marks text from a game that shipped an official Chinese localization; the rest are 52poke community translations of games that never had one.",
+  "requested": 157,
+  "resolved": 157,
+  "officialCount": 156,
+  "communityCount": 1,
+  "failures": [],
+  "entries": {
+    "152": {
+      "chineseDescription": "从头上的叶子那里会飘散出淡淡的甜香。性情温和，非常喜欢沐浴阳光。",
+      "version": "zadex",
+      "official": true,
+      "source": "https://wiki.52poke.com/wiki/%E8%8F%8A%E8%8D%89%E5%8F%B6"
+    },
+    "153": {
+      "chineseDescription": "脖子周围散发出的好似香辛料般的香味有焕发活力的效果。",
+      "version": "zadex",
+      "official": true,
+      "source": "https://wiki.52poke.com/wiki/%E6%9C%88%E6%A1%82%E5%8F%B6"
+    },
+    "154": {
+      "chineseDescription": "花瓣中散发出的气味里含有能够抚平好斗情绪的成分。从４朵花中放出的日光束威力巨大。别名超级日光炮。（超级进化）",
+      "version": "zadex",
+      "official": true,
+      "source": "https://wiki.52poke.com/wiki/%E5%A4%A7%E7%AB%BA%E8%91%B5"
+    },
+    "155": {
+      "chineseDescription": "背上喷出的火焰在它生气时燃烧得最为强烈，能够用来吓唬敌人。",
+      "version": "videx",
+      "official": true,
+      "source": "https://wiki.52poke.com/wiki/%E7%81%AB%E7%90%83%E9%BC%A0"
+    },
+    "156": {
+      "chineseDescription": "覆盖身体的皮毛绝不会被点燃。受到任何火焰攻击它都能安然无恙。",
+      "version": "videx",
+      "official": true,
+      "source": "https://wiki.52poke.com/wiki/%E7%81%AB%E5%B2%A9%E9%BC%A0"
+    },
+    "157": {
+      "chineseDescription": "愤怒到极点时，它热得能将碰到的所有东西瞬间点燃。",
+      "version": "videx",
+      "official": true,
+      "source": "https://wiki.52poke.com/wiki/%E7%81%AB%E6%9A%B4%E5%85%BD"
+    },
+    "158": {
+      "chineseDescription": "个子虽小，却是个粗暴的家伙。只要眼前有东西在动，就会上去先咬一口再说。",
+      "version": "zadex",
+      "official": true,
+      "source": "https://wiki.52poke.com/wiki/%E5%B0%8F%E9%94%AF%E9%B3%84"
+    },
+    "159": {
+      "chineseDescription": "即便牙齿掉了也会不断地重新长出来。嘴里总是长满着４８颗牙齿。",
+      "version": "zadex",
+      "official": true,
+      "source": "https://wiki.52poke.com/wiki/%E8%93%9D%E9%B3%84"
+    },
+    "160": {
+      "chineseDescription": "虽然平时动作慢慢悠悠，但在扑咬猎物的时候，速度却快得无法看清。用兜帽般的鳍和双臂构成一个巨大的颚，咬合的威力提升为１０倍。（超级进化）",
+      "version": "zadex",
+      "official": true,
+      "source": "https://wiki.52poke.com/wiki/%E5%A4%A7%E5%8A%9B%E9%B3%84"
+    },
+    "161": {
+      "chineseDescription": "遭遇敌人时，会用尾巴站立，让身体显得比平时更大，并以此来威吓对手。",
+      "version": "videx",
+      "official": true,
+      "source": "https://wiki.52poke.com/wiki/%E5%B0%BE%E7%AB%8B"
+    },
+    "162": {
+      "chineseDescription": "身手敏捷且身体十分柔软，即使被捉住也能一溜烟地从对方手中逃脱哦。",
+      "version": "videx",
+      "official": true,
+      "source": "https://wiki.52poke.com/wiki/%E5%A4%A7%E5%B0%BE%E7%AB%8B"
+    },
+    "187": {
+      "chineseDescription": "由于会乘着风在各地移动，因此除了寒冷的地方，几乎随处可见它的身影。",
+      "version": "videx",
+      "official": true,
+      "source": "https://wiki.52poke.com/wiki/%E6%AF%BD%E5%AD%90%E8%8D%89"
+    },
+    "188": {
+      "chineseDescription": "一旦天气变冷就会关上花瓣。由此就无法进行光合作用了，所以会飞到温暖的地区去。",
+      "version": "videx",
+      "official": true,
+      "source": "https://wiki.52poke.com/wiki/%E6%AF%BD%E5%AD%90%E8%8A%B1"
+    },
+    "189": {
+      "chineseDescription": "要当心它的棉孢子。如果不小心吸进去了，就会深受发痒及咳嗽之苦。",
+      "version": "videx",
+      "official": true,
+      "source": "https://wiki.52poke.com/wiki/%E6%AF%BD%E5%AD%90%E6%A3%89"
+    },
+    "191": {
+      "chineseDescription": "非常弱小。即使受到攻击，也只能拼命挥动着叶子来勉强赶走敌人。",
+      "version": "videx",
+      "official": true,
+      "source": "https://wiki.52poke.com/wiki/%E5%90%91%E6%97%A5%E7%A7%8D%E5%AD%90"
+    },
+    "192": {
+      "chineseDescription": "由于要把沐浴到的阳光转换成能量，因此白天总是面朝着太阳的方向。",
+      "version": "videx",
+      "official": true,
+      "source": "https://wiki.52poke.com/wiki/%E5%90%91%E6%97%A5%E8%8A%B1%E6%80%AA"
+    },
+    "193": {
+      "chineseDescription": "因为它无需转动大大的眼珠就能环视各个方向，所以连敌人和食物也能马上发现。",
+      "version": "videx",
+      "official": true,
+      "source": "https://wiki.52poke.com/wiki/%E8%9C%BB%E8%9C%BB%E8%9C%93"
+    },
+    "201": {
+      "chineseDescription": "奇形怪状不似生物，且个体之间形状各异，本人指出其身姿与异国文字的共通之处，但未获重视。",
+      "version": "ladex",
+      "official": true,
+      "source": "https://wiki.52poke.com/wiki/%E6%9C%AA%E7%9F%A5%E5%9B%BE%E8%85%BE"
+    },
+    "203": {
+      "chineseDescription": "尾巴上有小小的头。如果有敌人从背后靠近，就会受本能驱使地咬过去。",
+      "version": "videx",
+      "official": true,
+      "source": "https://wiki.52poke.com/wiki/%E9%BA%92%E9%BA%9F%E5%A5%87"
+    },
+    "207": {
+      "chineseDescription": "像在空中滑行一样飞向对手，贴到对手脸上让其大吃一惊后再用毒针进行攻击。",
+      "version": "videx",
+      "official": true,
+      "source": "https://wiki.52poke.com/wiki/%E5%A4%A9%E8%9D%8E"
+    },
+    "216": {
+      "chineseDescription": "手掌里渗入了满满的蜜汁。感到不安时只要舔舔手掌，就会喜笑颜开。",
+      "version": "videx",
+      "official": true,
+      "source": "https://wiki.52poke.com/wiki/%E7%86%8A%E5%AE%9D%E5%AE%9D"
+    },
+    "217": {
+      "chineseDescription": "擅长爬树。在树上寻找树果时如果撞见火暴猴，那就免不了一场纠纷。",
+      "version": "videx",
+      "official": true,
+      "source": "https://wiki.52poke.com/wiki/%E5%9C%88%E5%9C%88%E7%86%8A"
+    },
+    "218": {
+      "chineseDescription": "据说在火山活动频繁的太古时代，世界上生活着比现在还多的熔岩虫。",
+      "version": "videx",
+      "official": true,
+      "source": "https://wiki.52poke.com/wiki/%E7%86%94%E5%B2%A9%E8%99%AB"
+    },
+    "219": {
+      "chineseDescription": "传说野生的熔岩蜗牛数量突然增加是火山爆发的前兆。",
+      "version": "videx",
+      "official": true,
+      "source": "https://wiki.52poke.com/wiki/%E7%86%94%E5%B2%A9%E8%9C%97%E7%89%9B"
+    },
+    "231": {
+      "chineseDescription": "与外表不同，是个大力士。如果被它甩动的鼻子碰到，手臂的骨头就会支离破碎。",
+      "version": "videx",
+      "official": true,
+      "source": "https://wiki.52poke.com/wiki/%E5%B0%8F%E5%B0%8F%E8%B1%A1"
+    },
+    "232": {
+      "chineseDescription": "虽然平时性情稳重，但一旦被激怒，就会把身体蜷成一团，滚动着猛冲过来。",
+      "version": "videx",
+      "official": true,
+      "source": "https://wiki.52poke.com/wiki/%E9%A1%BF%E7%94%B2"
+    },
+    "234": {
+      "chineseDescription": "据说在过去外敌众多的时候实力更强，甚至还靠着自己的力量进化过。",
+      "version": "videx",
+      "official": true,
+      "source": "https://wiki.52poke.com/wiki/%E6%83%8A%E8%A7%92%E9%B9%BF"
+    },
+    "243": {
+      "chineseDescription": "据说是和雷电一同降临的宝可梦。能够从背上的雨云放射出雷电。",
+      "version": "bdspdex",
+      "official": true,
+      "source": "https://wiki.52poke.com/wiki/%E9%9B%B7%E5%85%AC"
+    },
+    "244": {
+      "chineseDescription": "据说如果炎帝吼叫的话，世界上的某处火山就会喷发。",
+      "version": "bdspdex",
+      "official": true,
+      "source": "https://wiki.52poke.com/wiki/%E7%82%8E%E5%B8%9D"
+    },
+    "245": {
+      "chineseDescription": "在全世界四处奔跑，让污水重回清澈。会随北风奔跑着离去。",
+      "version": "bdspdex",
+      "official": true,
+      "source": "https://wiki.52poke.com/wiki/%E6%B0%B4%E5%90%9B"
+    },
+    "249": {
+      "chineseDescription": "沉睡在很深的海沟底部。据说洛奇亚挥动翅膀的话，就会引起长达４０天的暴风雨。",
+      "version": "bdspdex",
+      "official": true,
+      "source": "https://wiki.52poke.com/wiki/%E6%B4%9B%E5%A5%87%E4%BA%9A"
+    },
+    "250": {
+      "chineseDescription": "其翅膀闪耀着七种色彩。传说见到凤王的人能够拥有永远的幸福。",
+      "version": "bdspdex",
+      "official": true,
+      "source": "https://wiki.52poke.com/wiki/%E5%87%A4%E7%8E%8B"
+    },
+    "252": {
+      "chineseDescription": "在垂直的墙壁上也能轻快地攀爬。会用尾巴感知湿度，以此来判断明天的天气。",
+      "version": "zadex",
+      "official": true,
+      "source": "https://wiki.52poke.com/wiki/%E6%9C%A8%E5%AE%88%E5%AE%AB"
+    },
+    "253": {
+      "chineseDescription": "发达的大腿肌肉会产生出惊人的爆发力和弹跳力。",
+      "version": "zadex",
+      "official": true,
+      "source": "https://wiki.52poke.com/wiki/%E6%A3%AE%E6%9E%97%E8%9C%A5%E8%9C%B4"
+    },
+    "254": {
+      "chineseDescription": "手臂上长出的叶子锋利得连大树都能“唰”地一刀砍倒。在密林中战斗无人能敌。会引爆背部积蓄了超级进化能量的种子，将尾巴的前端发射出去。（超级进化）",
+      "version": "zadex",
+      "official": true,
+      "source": "https://wiki.52poke.com/wiki/%E8%9C%A5%E8%9C%B4%E7%8E%8B"
+    },
+    "255": {
+      "chineseDescription": "因为体内燃烧着火焰，所以抱在怀里非常温暖。可以喷出１０００度的火球。",
+      "version": "zadex",
+      "official": true,
+      "source": "https://wiki.52poke.com/wiki/%E7%81%AB%E7%A8%9A%E9%B8%A1"
+    },
+    "256": {
+      "chineseDescription": "有着１秒内连踢１０次的腿技。会用尖锐的叫声威吓对手。",
+      "version": "zadex",
+      "official": true,
+      "source": "https://wiki.52poke.com/wiki/%E5%8A%9B%E5%A3%AE%E9%B8%A1"
+    },
+    "257": {
+      "chineseDescription": "有着能跃过３０层大楼的弹跳力。会用火焰拳将敌人烧成灰烬。沸腾的血液流遍全身，招式变得倍加凌厉。眨眼间就能压制敌人。（超级进化）",
+      "version": "zadex",
+      "official": true,
+      "source": "https://wiki.52poke.com/wiki/%E7%81%AB%E7%84%B0%E9%B8%A1"
+    },
+    "258": {
+      "chineseDescription": "会用头上的鳍感知水流，从而了解周围的情况。有着能举起岩石的力量。",
+      "version": "zadex",
+      "official": true,
+      "source": "https://wiki.52poke.com/wiki/%E6%B0%B4%E8%B7%83%E9%B1%BC"
+    },
+    "259": {
+      "chineseDescription": "腰腿十分结实，即使是在泥泞的地上也能稳步前进。会把身体埋进泥里睡觉。",
+      "version": "zadex",
+      "official": true,
+      "source": "https://wiki.52poke.com/wiki/%E6%B2%BC%E8%B7%83%E9%B1%BC"
+    },
+    "260": {
+      "chineseDescription": "拥有能拖着大型船只游动的力量。只要挥一挥粗壮的手臂就能打倒对手。能通过液压泵原理利用体内的水分进一步强化膨胀的肌肉。（超级进化）",
+      "version": "zadex",
+      "official": true,
+      "source": "https://wiki.52poke.com/wiki/%E5%B7%A8%E6%B2%BC%E6%80%AA"
+    },
+    "261": {
+      "chineseDescription": "会成群地追捕猎物，趁目标筋疲力尽时干掉对方，但有时会因遭到反击而逃跑。",
+      "version": "videx",
+      "official": true,
+      "source": "https://wiki.52poke.com/wiki/%E5%9C%9F%E7%8B%BC%E7%8A%AC"
+    },
+    "262": {
+      "chineseDescription": "当嗅到远处有猎物的味道时，就会遵从首领的指示，成群结队地一齐出动。",
+      "version": "videx",
+      "official": true,
+      "source": "https://wiki.52poke.com/wiki/%E5%A4%A7%E7%8B%BC%E7%8A%AC"
+    },
+    "265": {
+      "chineseDescription": "嗜食树液，大量生息于山野之中。进化成不同形态的理由不明，且无法从外观判断其进化方式。",
+      "version": "ladex",
+      "official": true,
+      "source": "https://wiki.52poke.com/wiki/%E5%88%BA%E5%B0%BE%E8%99%AB"
+    },
+    "266": {
+      "chineseDescription": "以细丝包裹全身，积蓄进化所需的活力。虽然无手脚且动作迟缓，但双眼射出的凌厉视线不会放过四周的风吹草动。",
+      "version": "ladex",
+      "official": true,
+      "source": "https://wiki.52poke.com/wiki/%E7%94%B2%E5%A3%B3%E8%8C%A7"
+    },
+    "267": {
+      "chineseDescription": "拥有色彩鲜艳的美丽外貌，然而性情贪婪，会驱赶正在采集花蜜的三蜜蜂，以便独占自己爱吃的花蜜。",
+      "version": "ladex",
+      "official": true,
+      "source": "https://wiki.52poke.com/wiki/%E7%8B%A9%E7%8C%8E%E5%87%A4%E8%9D%B6"
+    },
+    "268": {
+      "chineseDescription": "包裹全身的丝虽细，但强度十足，且色泽更胜甲壳茧的丝，以此织成的衣物被人们视为上品。",
+      "version": "ladex",
+      "official": true,
+      "source": "https://wiki.52poke.com/wiki/%E7%9B%BE%E7%94%B2%E8%8C%A7"
+    },
+    "269": {
+      "chineseDescription": "有着被黑暗中的篝火吸引的习性。会散布毒性猛烈的鳞粉，令人们为了将它们驱离村落而煞费苦心。",
+      "version": "ladex",
+      "official": true,
+      "source": "https://wiki.52poke.com/wiki/%E6%AF%92%E7%B2%89%E8%9B%BE"
+    },
+    "276": {
+      "chineseDescription": "有着不管是怎样强大的对手都敢于前去迎战的毅力。会向着温暖的土地飞行。",
+      "version": "bdspdex",
+      "official": true,
+      "source": "https://wiki.52poke.com/wiki/%E5%82%B2%E9%AA%A8%E7%87%95"
+    },
+    "277": {
+      "chineseDescription": "边在高空盘旋边搜寻猎物，发现猎物后会头朝下急速俯冲将其捕获。",
+      "version": "bdspdex",
+      "official": true,
+      "source": "https://wiki.52poke.com/wiki/%E5%A4%A7%E7%8E%8B%E7%87%95"
+    },
+    "285": {
+      "chineseDescription": "只要感知到了危险，就会从头顶撒出毒孢子来保护自身安全的宝可梦。",
+      "version": "videx",
+      "official": true,
+      "source": "https://wiki.52poke.com/wiki/%E8%98%91%E8%98%91%E8%8F%87"
+    },
+    "286": {
+      "chineseDescription": "尾巴上的种子是由毒孢子构成的。会以肉眼无法看清的速度出拳打倒敌人。",
+      "version": "videx",
+      "official": true,
+      "source": "https://wiki.52poke.com/wiki/%E6%96%97%E7%AC%A0%E8%8F%87"
+    },
+    "287": {
+      "chineseDescription": "懒人獭慵懒的样子会深深地刺激看着它的人的懒惰之心。",
+      "version": "videx",
+      "official": true,
+      "source": "https://wiki.52poke.com/wiki/%E6%87%92%E4%BA%BA%E7%8D%AD"
+    },
+    "288": {
+      "chineseDescription": "由于它每时每刻都在大闹，所以很快就会觉得饿，但它却连吃饭时都静不下来。",
+      "version": "videx",
+      "official": true,
+      "source": "https://wiki.52poke.com/wiki/%E8%BF%87%E5%8A%A8%E7%8C%BF"
+    },
+    "289": {
+      "chineseDescription": "平时都是躺着生活。等到周围的草都吃光后，才会翻身移动到别处。",
+      "version": "videx",
+      "official": true,
+      "source": "https://wiki.52poke.com/wiki/%E8%AF%B7%E5%81%87%E7%8E%8B"
+    },
+    "300": {
+      "chineseDescription": "不由自主地就会去追动的东西。会追着自己的尾巴，一圈圈地原地打转。",
+      "version": "bdspdex",
+      "official": true,
+      "source": "https://wiki.52poke.com/wiki/%E5%90%91%E5%B0%BE%E5%96%B5"
+    },
+    "301": {
+      "chineseDescription": "有着美丽的毛发，非常受女性训练家的欢迎。没有固定的住所。",
+      "version": "bdspdex",
+      "official": true,
+      "source": "https://wiki.52poke.com/wiki/%E4%BC%98%E9%9B%85%E7%8C%AB"
+    },
+    "307": {
+      "chineseDescription": "１天只吃１个树果。会通过忍饥挨饿来磨砺己心。",
+      "version": "zadex",
+      "official": true,
+      "source": "https://wiki.52poke.com/wiki/%E7%8E%9B%E6%B2%99%E9%82%A3"
+    },
+    "308": {
+      "chineseDescription": "能够使用通过瑜伽修行锻炼出来的精神力量来预测对手的行动。因超级进化获得了无穷的精神力。会用带有杀气的想象之臂打倒敌人。（超级进化）",
+      "version": "zadex",
+      "official": true,
+      "source": "https://wiki.52poke.com/wiki/%E6%81%B0%E9%9B%B7%E5%A7%86"
+    },
+    "311": {
+      "chineseDescription": "能从电线杆上吸取电力。会通过让体内储存的电流短路来发出声音。",
+      "version": "videx",
+      "official": true,
+      "source": "https://wiki.52poke.com/wiki/%E6%AD%A3%E7%94%B5%E6%8B%8D%E6%8B%8D"
+    },
+    "312": {
+      "chineseDescription": "很讨厌水，一旦下起雨来就会躲到屋檐下避雨。会用火花拉拉球给伙伴加油。",
+      "version": "videx",
+      "official": true,
+      "source": "https://wiki.52poke.com/wiki/%E8%B4%9F%E7%94%B5%E6%8B%8D%E6%8B%8D"
+    },
+    "313": {
+      "chineseDescription": "会闪烁臀部的光来和伙伴交流。非常喜欢甜甜萤放出的甜甜香气。",
+      "version": "videx",
+      "official": true,
+      "source": "https://wiki.52poke.com/wiki/%E7%94%B5%E8%90%A4%E8%99%AB"
+    },
+    "314": {
+      "chineseDescription": "会诱导电萤虫在夜空中描绘记号。也有学者在研究记号的含意。",
+      "version": "videx",
+      "official": true,
+      "source": "https://wiki.52poke.com/wiki/%E7%94%9C%E7%94%9C%E8%90%A4"
+    },
+    "316": {
+      "chineseDescription": "整个身体几乎都是胃。吞下的东西会立刻被强力的胃液消化掉。",
+      "version": "zadex",
+      "official": true,
+      "source": "https://wiki.52poke.com/wiki/%E6%BA%B6%E9%A3%9F%E5%85%BD"
+    },
+    "317": {
+      "chineseDescription": "不管是什么都会整个吞掉。会将毛孔中分泌出的剧毒体液撒向敌人。",
+      "version": "zadex",
+      "official": true,
+      "source": "https://wiki.52poke.com/wiki/%E5%90%9E%E9%A3%9F%E5%85%BD"
+    },
+    "322": {
+      "chineseDescription": "体内储存了１２００度的熔岩。使用火属性的招式后，驼峰就会瘪下去。",
+      "version": "zadex",
+      "official": true,
+      "source": "https://wiki.52poke.com/wiki/%E5%91%86%E7%81%AB%E9%A9%BC"
+    },
+    "323": {
+      "chineseDescription": "背上的驼峰火山每１０年就会进行一次大喷发，但暴怒时也会喷发。愤怒到达沸点后，背上巨大的驼峰火山会大喷发并喷射熔岩。（超级进化）",
+      "version": "zadex",
+      "official": true,
+      "source": "https://wiki.52poke.com/wiki/%E5%96%B7%E7%81%AB%E9%A9%BC"
+    },
+    "325": {
+      "chineseDescription": "会用尾巴代替弹簧，一直在跳来跳去。靠跳跃时的震动来使心脏跳动。",
+      "version": "zadex",
+      "official": true,
+      "source": "https://wiki.52poke.com/wiki/%E8%B7%B3%E8%B7%B3%E7%8C%AA"
+    },
+    "326": {
+      "chineseDescription": "能用黑珍珠增强自己的精神力量。会用神奇的舞步操纵对手的心。",
+      "version": "zadex",
+      "official": true,
+      "source": "https://wiki.52poke.com/wiki/%E5%99%97%E5%99%97%E7%8C%AA"
+    },
+    "331": {
+      "chineseDescription": "栖息在少雨的干燥地方。黄色的花朵１年绽放１次。",
+      "version": "videx",
+      "official": true,
+      "source": "https://wiki.52poke.com/wiki/%E5%88%BA%E7%90%83%E4%BB%99%E4%BA%BA%E6%8E%8C"
+    },
+    "332": {
+      "chineseDescription": "栖息在沙漠。到了夜晚就会开始活动，去捕捉因受不了沙漠的炎热而精疲力尽的猎物。",
+      "version": "videx",
+      "official": true,
+      "source": "https://wiki.52poke.com/wiki/%E6%A2%A6%E6%AD%8C%E4%BB%99%E4%BA%BA%E6%8E%8C"
+    },
+    "335": {
+      "chineseDescription": "只要闻到饭匙蛇的气味，全身的体毛就会竖立起来。会用锋利的爪子撕裂敌人。",
+      "version": "zadex",
+      "official": true,
+      "source": "https://wiki.52poke.com/wiki/%E7%8C%AB%E9%BC%AC%E6%96%A9"
+    },
+    "336": {
+      "chineseDescription": "会用渗出剧毒的锋利尾巴来对抗敏捷的猫鼬斩。",
+      "version": "zadex",
+      "official": true,
+      "source": "https://wiki.52poke.com/wiki/%E9%A5%AD%E5%8C%99%E8%9B%87"
+    },
+    "358": {
+      "chineseDescription": "会用叫声振动空气，来轰飞对手。使用７种不同的声音和同伴说话。振动全身，通过音波对所有方向发动攻击。听着听着就会迷失自我。（超级进化）",
+      "version": "zadex",
+      "official": true,
+      "source": "https://wiki.52poke.com/wiki/%E9%A3%8E%E9%93%83%E9%93%83"
+    },
+    "380": {
+      "chineseDescription": "通过心灵感应交流情感。用能令光发生折射的羽毛包裹身体来让自己隐形。飞行能力和攻击力提升。会撒下透明的羽毛扰乱敌人。（超级进化）",
+      "version": "zadex",
+      "official": true,
+      "source": "https://wiki.52poke.com/wiki/%E6%8B%89%E5%B8%9D%E4%BA%9A%E6%96%AF"
+    },
+    "381": {
+      "chineseDescription": "拥有很高的智商，能理解人类的语言。是讨厌争斗且温柔的宝可梦。飞行速度超过４马赫。拥有在宝可梦中顶级的空中战斗力。（超级进化）",
+      "version": "zadex",
+      "official": true,
+      "source": "https://wiki.52poke.com/wiki/%E6%8B%89%E5%B8%9D%E6%AC%A7%E6%96%AF"
+    },
+    "382": {
+      "chineseDescription": "神话中的宝可梦，它用大雨和大海啸扩张海洋。曾与固拉多激烈交战。通过拥有原始世界的能量的靛蓝色宝珠回归而来。肉体就像是海水一样。（原始回归）",
+      "version": "zadex",
+      "official": true,
+      "source": "https://wiki.52poke.com/wiki/%E7%9B%96%E6%AC%A7%E5%8D%A1"
+    },
+    "383": {
+      "chineseDescription": "据说能用高温蒸发水分扩张大地。曾与盖欧卡激烈交战。借由朱红色宝珠复活的原本的样子。能量化作岩浆，从身体里面溢出。（原始回归）",
+      "version": "zadex",
+      "official": true,
+      "source": "https://wiki.52poke.com/wiki/%E5%9B%BA%E6%8B%89%E5%A4%9A"
+    },
+    "384": {
+      "chineseDescription": "因为栖息在高高的云层之上的臭氧层，所以从地面无法看见它的样子。夜空中闪耀的流星可能是超级烈空坐追逐陨石飞舞的身姿。（超级进化）",
+      "version": "zadex",
+      "official": true,
+      "source": "https://wiki.52poke.com/wiki/%E7%83%88%E7%A9%BA%E5%9D%90"
+    },
+    "386": {
+      "chineseDescription": "附着在陨石上的宇宙病毒的ＤＮＡ变异后生成的宝可梦。",
+      "version": "bdspdex",
+      "official": true,
+      "source": "https://wiki.52poke.com/wiki/%E4%BB%A3%E6%AC%A7%E5%A5%87%E5%B8%8C%E6%96%AF"
+    },
+    "387": {
+      "chineseDescription": "沐浴着阳光，用全身进行光合作用。甲壳是泥土变硬后形成的。",
+      "version": "videx",
+      "official": true,
+      "source": "https://wiki.52poke.com/wiki/%E8%8D%89%E8%8B%97%E9%BE%9F"
+    },
+    "388": {
+      "chineseDescription": "知道哪里会涌出清澈的水，会让伙伴宝可梦骑在它背上，将其运到那个地方。",
+      "version": "videx",
+      "official": true,
+      "source": "https://wiki.52poke.com/wiki/%E6%A0%91%E6%9E%97%E9%BE%9F"
+    },
+    "389": {
+      "chineseDescription": "有的宝可梦会在土台龟背上出生，并在此度过一生。",
+      "version": "videx",
+      "official": true,
+      "source": "https://wiki.52poke.com/wiki/%E5%9C%9F%E5%8F%B0%E9%BE%9F"
+    },
+    "390": {
+      "chineseDescription": "腹部产生的瓦斯在屁屁燃烧着。身体状况不好的话，火焰会变弱。",
+      "version": "videx",
+      "official": true,
+      "source": "https://wiki.52poke.com/wiki/%E5%B0%8F%E7%81%AB%E7%84%B0%E7%8C%B4"
+    },
+    "391": {
+      "chineseDescription": "尾巴上的火焰越大，蓝色脸谱的色泽越鲜艳，在群体中的地位就越高。",
+      "version": "videx",
+      "official": true,
+      "source": "https://wiki.52poke.com/wiki/%E7%8C%9B%E7%81%AB%E7%8C%B4"
+    },
+    "392": {
+      "chineseDescription": "会使用手脚缠绕着火焰的独特格斗技，无论什么样的对手都会勇敢对抗。",
+      "version": "videx",
+      "official": true,
+      "source": "https://wiki.52poke.com/wiki/%E7%83%88%E7%84%B0%E7%8C%B4"
+    },
+    "393": {
+      "chineseDescription": "讨厌被别人照顾。因为不听训练家的指示，所以要和它关系变好是很困难的。",
+      "version": "videx",
+      "official": true,
+      "source": "https://wiki.52poke.com/wiki/%E6%B3%A2%E5%8A%A0%E6%9B%BC"
+    },
+    "394": {
+      "chineseDescription": "每一只波皇子都认为自己是最了不起的，因此它们无法形成群体。",
+      "version": "videx",
+      "official": true,
+      "source": "https://wiki.52poke.com/wiki/%E6%B3%A2%E7%9A%87%E5%AD%90"
+    },
+    "395": {
+      "chineseDescription": "虽然不会挑起无谓的争斗，但对于威胁到群体安全的敌人，会毫不留情地将其击垮。",
+      "version": "videx",
+      "official": true,
+      "source": "https://wiki.52poke.com/wiki/%E5%B8%9D%E7%8E%8B%E6%8B%BF%E6%B3%A2"
+    },
+    "396": {
+      "chineseDescription": "会很多只一起群体行动。虽然身体很小，但拍打翅膀的力量非常强。",
+      "version": "zadex",
+      "official": true,
+      "source": "https://wiki.52poke.com/wiki/%E5%A7%86%E5%85%8B%E5%84%BF"
+    },
+    "397": {
+      "chineseDescription": "栖息在森林和草原。如果遇到同类的团队，就会开始争夺领地。",
+      "version": "zadex",
+      "official": true,
+      "source": "https://wiki.52poke.com/wiki/%E5%A7%86%E5%85%8B%E9%B8%9F"
+    },
+    "398": {
+      "chineseDescription": "翅膀和脚的肌肉很发达，能抓着小的宝可梦轻轻松松地飞行。拥有顶级的飞行能力。能抓着超过４００公斤的大钢蛇轻轻松松地飞翔。（超级进化）",
+      "version": "zadex",
+      "official": true,
+      "source": "https://wiki.52poke.com/wiki/%E5%A7%86%E5%85%8B%E9%B9%B0"
+    },
+    "399": {
+      "chineseDescription": "表情木讷，遇到何事都能处之泰然。过去曾发生大牙狸光明正大地跑进村里，还光明正大地把房屋啃了一番的离奇事件。",
+      "version": "ladex",
+      "official": true,
+      "source": "https://wiki.52poke.com/wiki/%E5%A4%A7%E7%89%99%E7%8B%B8"
+    },
+    "400": {
+      "chineseDescription": "体毛有着极佳的防水效果，且保温性十足，性能十分优秀。会在河中筑起堤坝当作巢穴。",
+      "version": "ladex",
+      "official": true,
+      "source": "https://wiki.52poke.com/wiki/%E5%A4%A7%E5%B0%BE%E7%8B%B8"
+    },
+    "401": {
+      "chineseDescription": "触角之间互相碰撞的话，就会奏出叮叮咚咚如同木琴一般的音色。",
+      "version": "videx",
+      "official": true,
+      "source": "https://wiki.52poke.com/wiki/%E5%9C%86%E6%B3%95%E5%B8%88"
+    },
+    "402": {
+      "chineseDescription": "有村子会让它们互相比拼变化多端的叫声，当成娱乐活动。",
+      "version": "videx",
+      "official": true,
+      "source": "https://wiki.52poke.com/wiki/%E9%9F%B3%E7%AE%B1%E8%9F%80"
+    },
+    "412": {
+      "chineseDescription": "蓑衣只要稍有缺损，就会立即用身边的材料加以修补。蓑衣内的身体十分细瘦且畏惧寒冷。（草木蓑衣）将吐出的丝揉合泥沙制成蓑衣。泥沙所制的蓑衣不耐风雨，因此它会躲藏在洞穴等处。（砂土蓑衣）当身边找不到适合的材料时，会用尘土草芥等垃圾来做蓑衣。裹起来的感觉似乎意外地还不坏。（垃圾蓑衣）",
+      "version": "ladex",
+      "official": true,
+      "source": "https://wiki.52poke.com/wiki/%E7%BB%93%E8%8D%89%E5%84%BF"
+    },
+    "413": {
+      "chineseDescription": "草木制成的蓑衣与躯体融合，如同体毛或皮肤般成为了身体的一部分。据考察这乃是进化能量带来的作用。（草木蓑衣）泥沙形成的皮肤有相当的硬度。若是姆克儿的嘴喙程度的攻击，轻而易举就可以反弹回去。（砂土蓑衣）尘土草芥等垃圾构成的身体能毫不起眼地融入周围景色之中，正好适合用来躲避天敌袭击。（垃圾蓑衣）",
+      "version": "ladex",
+      "official": true,
+      "source": "https://wiki.52poke.com/wiki/%E7%BB%93%E8%8D%89%E8%B4%B5%E5%A6%87"
+    },
+    "414": {
+      "chineseDescription": "拍动翅膀时会洒下银灰色的鳞粉。虽然观察结果显示其主食是花蜜，但却很少在花田看见它们。",
+      "version": "ladex",
+      "official": true,
+      "source": "https://wiki.52poke.com/wiki/%E7%BB%85%E5%A3%AB%E8%9B%BE"
+    },
+    "417": {
+      "chineseDescription": "有时候也会发现为了将储存的电分给同伴而互相摩擦颊囊的帕奇利兹。",
+      "version": "videx",
+      "official": true,
+      "source": "https://wiki.52poke.com/wiki/%E5%B8%95%E5%A5%87%E5%88%A9%E5%85%B9"
+    },
+    "418": {
+      "chineseDescription": "使脖子上的浮囊膨胀，来让脸部露出水面，以此探查岸上猎物的动静。",
+      "version": "videx",
+      "official": true,
+      "source": "https://wiki.52poke.com/wiki/%E6%B3%B3%E5%9C%88%E9%BC%AC"
+    },
+    "419": {
+      "chineseDescription": "大量栖息在渔村，不仅会去帮助溺水的人，还会帮忙搬运捕获的猎物。",
+      "version": "videx",
+      "official": true,
+      "source": "https://wiki.52poke.com/wiki/%E6%B5%AE%E6%BD%9C%E9%BC%AC"
+    },
+    "431": {
+      "chineseDescription": "以漩涡状的尾巴及眼力迷惑人心。暗藏的爪子也十分锐利，一旦与之为敌将会非常棘手。",
+      "version": "ladex",
+      "official": true,
+      "source": "https://wiki.52poke.com/wiki/%E9%AD%85%E5%8A%9B%E5%96%B5"
+    },
+    "432": {
+      "chineseDescription": "性情厚颜无耻且极难驯服，但由于拥有更胜棉花绒的美丽皮毛，因此很受人欢迎。",
+      "version": "ladex",
+      "official": true,
+      "source": "https://wiki.52poke.com/wiki/%E4%B8%9C%E6%96%BD%E5%96%B5"
+    },
+    "433": {
+      "chineseDescription": "通过振动喉咙里的圆珠子发出叫声。用轻快的弹跳来移动身体。",
+      "version": "zadex",
+      "official": true,
+      "source": "https://wiki.52poke.com/wiki/%E9%93%83%E9%93%9B%E5%93%8D"
+    },
+    "441": {
+      "chineseDescription": "能将人类话语模仿得惟妙惟肖的表演家。当随着年龄增长而累积众多经验后，甚至能够理解话语中的含义。",
+      "version": "ladex",
+      "official": true,
+      "source": "https://wiki.52poke.com/wiki/%E8%81%92%E5%99%AA%E9%B8%9F"
+    },
+    "455": {
+      "chineseDescription": "虽是草木形态的宝可梦，但性情却是贪婪粗暴，会张开大口袭击猎物。",
+      "version": "ladex",
+      "official": true,
+      "source": "https://wiki.52poke.com/wiki/%E5%B0%96%E7%89%99%E7%AC%BC"
+    },
+    "469": {
+      "chineseDescription": "颚部的力量异常强大。擅长在高速飞行中咬碎与自己擦身而过的对手。",
+      "version": "videx",
+      "official": true,
+      "source": "https://wiki.52poke.com/wiki/%E8%BF%9C%E5%8F%A4%E5%B7%A8%E8%9C%93"
+    },
+    "472": {
+      "chineseDescription": "可以不发出振翅声而在空中飞行。用长长的尾巴捕捉猎物，再用牙齿一击刺中要害。",
+      "version": "videx",
+      "official": true,
+      "source": "https://wiki.52poke.com/wiki/%E5%A4%A9%E8%9D%8E%E7%8E%8B"
+    },
+    "480": {
+      "chineseDescription": "会夺去恶人的记忆，因而受到人们敬畏的宝可梦。本人曾发现提及此宝可梦司掌知识的记录。",
+      "version": "ladex",
+      "official": true,
+      "source": "https://wiki.52poke.com/wiki/%E7%94%B1%E5%85%8B%E5%B8%8C"
+    },
+    "481": {
+      "chineseDescription": "有着感情之神别名的宝可梦。传说它会令对其不敬之人的感情失控，因而受到人们畏惧。",
+      "version": "ladex",
+      "official": true,
+      "source": "https://wiki.52poke.com/wiki/%E8%89%BE%E5%A7%86%E5%88%A9%E5%A4%9A"
+    },
+    "482": {
+      "chineseDescription": "以意志之神的身份受人畏惧的宝可梦。传说它能操纵与自己敌对者的意志，使其化为傀儡。",
+      "version": "ladex",
+      "official": true,
+      "source": "https://wiki.52poke.com/wiki/%E4%BA%9A%E5%85%8B%E8%AF%BA%E5%A7%86"
+    },
+    "483": {
+      "chineseDescription": "洗翠地区流传着这样的神话传说：当此神诞生，现世的时间便如滔滔大河般开始流动。光明乃是促使形态变化的导火线。此形态所能发挥的强大力量，令人不得不认为如此酷似创造神的姿态才是其真身。（起源形态）",
+      "version": "ladex",
+      "official": true,
+      "source": "https://wiki.52poke.com/wiki/%E5%B8%9D%E7%89%99%E5%8D%A2%E5%8D%A1"
+    },
+    "484": {
+      "chineseDescription": "洗翠地区流传着这样的神话传说：当此神诞生，阻隔现世的屏障消失，出现了无边无际的空间。翱翔天际的姿态令人联想起万物的创造主。本人推测，模仿创造主的模样正是将其力化为己有的方法。（起源形态）",
+      "version": "ladex",
+      "official": true,
+      "source": "https://wiki.52poke.com/wiki/%E5%B8%95%E8%B7%AF%E5%A5%87%E4%BA%9A"
+    },
+    "485": {
+      "chineseDescription": "像熔岩般沸腾的血液在体内流动着。栖息在火山的洞穴里。据说它在火力全开时体温会升高到１００万度，决不允许敌人靠近。（超级进化）",
+      "version": "zadex",
+      "official": true,
+      "source": "https://wiki.52poke.com/wiki/%E5%B8%AD%E5%A4%9A%E8%93%9D%E6%81%A9"
+    },
+    "487": {
+      "chineseDescription": "洗翠地区自古流传着这样一句话：强光照而暗影生。在本人的想象中，暗影指的正是这种宝可梦。（别种形态）脚部随着形态变化而消失。据推测，此宝可梦栖息于没有天地之分的世界，然而没有手段能加以证明。（起源形态）",
+      "version": "ladex",
+      "official": true,
+      "source": "https://wiki.52poke.com/wiki/%E9%AA%91%E6%8B%89%E5%B8%9D%E7%BA%B3"
+    },
+    "488": {
+      "chineseDescription": "令人联想到弯月的宝可梦。在夜空中飞翔时，会留下一道鲜明的光迹，就像是在天上画出一条银河的仙女。",
+      "version": "ladex",
+      "official": true,
+      "source": "https://wiki.52poke.com/wiki/%E5%85%8B%E9%9B%B7%E8%89%B2%E5%88%A9%E4%BA%9A"
+    },
+    "489": {
+      "chineseDescription": "在海水温度上升的季节可以看见它漂在海岸附近的身影。苍蓝的体色与海水颜色相近，能保护它免于天敌的侵袭。",
+      "version": "ladex",
+      "official": true,
+      "source": "https://wiki.52poke.com/wiki/%E9%9C%8F%E6%AC%A7%E7%BA%B3"
+    },
+    "490": {
+      "chineseDescription": "洄游在大洋中，有传闻说它在极少数情况下会来到洗翠近海。外形与霏欧纳相似，但有许多不同之处，两者之间关系不明。",
+      "version": "ladex",
+      "official": true,
+      "source": "https://wiki.52poke.com/wiki/%E7%8E%9B%E7%BA%B3%E9%9C%8F"
+    },
+    "491": {
+      "chineseDescription": "拥有诱使人们进入深度睡眠并做梦的能力。在朔月的夜晚活动。黑暗力量会遮蔽太阳，使周围全部陷入黑暗。谁都无法逃离它的邪眼。（超级进化）",
+      "version": "zadex",
+      "official": true,
+      "source": "https://wiki.52poke.com/wiki/%E8%BE%BE%E5%85%8B%E8%8E%B1%E4%BC%8A"
+    },
+    "492": {
+      "chineseDescription": "当人们欣喜于严冬随着季节更替而终结，向上天奉献感谢之意时，此宝可梦就会现身，令荒寂的大地开满鲜花。（陆上形态）当嗅闻珍奇之花的香味时，娇小的身体将在光辉之中变化成此形貌。本人曾尝试嗅闻该花，但没有变化。（天空形态）",
+      "version": "ladex",
+      "official": true,
+      "source": "https://wiki.52poke.com/wiki/%E8%B0%A2%E7%B1%B3"
+    },
+    "493": {
+      "chineseDescription": "以自身为光源，从天照耀洗翠大地。凭借其光明引导并守护宝可梦。洗翠神话视其为万物的创造主。",
+      "version": "ladex",
+      "official": true,
+      "source": "https://wiki.52poke.com/wiki/%E9%98%BF%E5%B0%94%E5%AE%99%E6%96%AF"
+    },
+    "494": {
+      "chineseDescription": "如果获得了比克提尼所分享的无限生成的能量，就会全身充满力量。",
+      "version": "alphasapphiredex",
+      "official": false,
+      "source": "https://wiki.52poke.com/wiki/%E6%AF%94%E5%85%8B%E6%8F%90%E5%B0%BC"
+    },
+    "495": {
+      "chineseDescription": "性情上不喜欢聚在一起。在生活中能灵活运用藤蔓来代替短短的手臂。",
+      "version": "videx",
+      "official": true,
+      "source": "https://wiki.52poke.com/wiki/%E8%97%A4%E8%97%A4%E8%9B%87"
+    },
+    "496": {
+      "chineseDescription": "过高的自尊心是它的美中不足之处。需要花上不少时间才能和其他宝可梦合作。",
+      "version": "videx",
+      "official": true,
+      "source": "https://wiki.52poke.com/wiki/%E9%9D%92%E8%97%A4%E8%9B%87"
+    },
+    "497": {
+      "chineseDescription": "它拥有能让对手畏惧的眼神和威风凛凛的样子，因此被称为森林的君主。",
+      "version": "videx",
+      "official": true,
+      "source": "https://wiki.52poke.com/wiki/%E5%90%9B%E4%B8%BB%E8%9B%87"
+    },
+    "498": {
+      "chineseDescription": "可以轻巧地躲避敌人的攻击，从鼻子里射出火球来。会用火烤树果吃。",
+      "version": "zadex",
+      "official": true,
+      "source": "https://wiki.52poke.com/wiki/%E6%9A%96%E6%9A%96%E7%8C%AA"
+    },
+    "499": {
+      "chineseDescription": "吃得越多，可供燃烧的东西就越多，胃里的火会增强，力量也会源源不断地溢出。",
+      "version": "zadex",
+      "official": true,
+      "source": "https://wiki.52poke.com/wiki/%E7%82%92%E7%82%92%E7%8C%AA"
+    },
+    "500": {
+      "chineseDescription": "蓄着火焰的胡须。身怀兼具力量与速度的格斗招式。会高举熊熊燃烧的蛇矛状火焰，火速赶去援救陷入困境的伙伴。（超级进化）",
+      "version": "zadex",
+      "official": true,
+      "source": "https://wiki.52poke.com/wiki/%E7%82%8E%E6%AD%A6%E7%8E%8B"
+    },
+    "501": {
+      "chineseDescription": "据说它模仿了人类使用磨刀石的样子，变得会用河滩上的石头保养扇贝贝了。",
+      "version": "videx",
+      "official": true,
+      "source": "https://wiki.52poke.com/wiki/%E6%B0%B4%E6%B0%B4%E7%8D%AD"
+    },
+    "502": {
+      "chineseDescription": "它性情勤勉，严以律己。会通过踏踏实实地反复练习来掌握运用扇贝贝的技巧。",
+      "version": "videx",
+      "official": true,
+      "source": "https://wiki.52poke.com/wiki/%E5%8F%8C%E5%88%83%E4%B8%B8"
+    },
+    "503": {
+      "chineseDescription": "统率着群体，对不守规矩的家伙，会毫不手软地予以痛击，性情严格。",
+      "version": "videx",
+      "official": true,
+      "source": "https://wiki.52poke.com/wiki/%E5%A4%A7%E5%89%91%E9%AC%BC"
+    },
+    "504": {
+      "chineseDescription": "会在颊囊里藏食物，连续放哨好几天。用尾巴给伙伴发出暗号。",
+      "version": "zadex",
+      "official": true,
+      "source": "https://wiki.52poke.com/wiki/%E6%8E%A2%E6%8E%A2%E9%BC%A0"
+    },
+    "505": {
+      "chineseDescription": "用体内的发光物质让眼珠和身体闪闪发光，使来袭的敌人畏缩。",
+      "version": "zadex",
+      "official": true,
+      "source": "https://wiki.52poke.com/wiki/%E6%AD%A5%E5%93%A8%E9%BC%A0"
+    },
+    "511": {
+      "chineseDescription": "会把头上的叶子分给没有精神的宝可梦。具有缓解疲劳的效果。",
+      "version": "zadex",
+      "official": true,
+      "source": "https://wiki.52poke.com/wiki/%E8%8A%B1%E6%A4%B0%E7%8C%B4"
+    },
+    "512": {
+      "chineseDescription": "性格粗暴，会挥动着带有尖刺的尾巴战斗。头上的叶子非常苦。",
+      "version": "zadex",
+      "official": true,
+      "source": "https://wiki.52poke.com/wiki/%E8%8A%B1%E6%A4%B0%E7%8C%BF"
+    },
+    "513": {
+      "chineseDescription": "智商很高，有着将树果烤熟后再吃的习性。很喜爱给人类帮忙。",
+      "version": "zadex",
+      "official": true,
+      "source": "https://wiki.52poke.com/wiki/%E7%88%86%E9%A6%99%E7%8C%B4"
+    },
+    "514": {
+      "chineseDescription": "兴奋的时候，从头和尾巴飞扬起火花，身体变热。不知为何，很喜欢吃甜的东西。",
+      "version": "zadex",
+      "official": true,
+      "source": "https://wiki.52poke.com/wiki/%E7%88%86%E9%A6%99%E7%8C%BF"
+    },
+    "515": {
+      "chineseDescription": "头上的毛发丛里储藏的水充满了营养。会用尾巴给草木浇这种水。",
+      "version": "zadex",
+      "official": true,
+      "source": "https://wiki.52poke.com/wiki/%E5%86%B7%E6%B0%B4%E7%8C%B4"
+    },
+    "516": {
+      "chineseDescription": "喜欢水很干净的地方。一旦头上储藏的水减少，就会用尾巴吸水来补充。",
+      "version": "zadex",
+      "official": true,
+      "source": "https://wiki.52poke.com/wiki/%E5%86%B7%E6%B0%B4%E7%8C%BF"
+    },
+    "522": {
+      "chineseDescription": "喜欢经常发生落雷的地方。会用鬃毛接住雷电，将电力储存到身体中。",
+      "version": "videx",
+      "official": true,
+      "source": "https://wiki.52poke.com/wiki/%E6%96%91%E6%96%91%E9%A9%AC"
+    },
+    "523": {
+      "chineseDescription": "一旦听到雷鸣声，就会为了让群体中的斑斑马能通过雷电充电而成群地追赶雷雨云。",
+      "version": "videx",
+      "official": true,
+      "source": "https://wiki.52poke.com/wiki/%E9%9B%B7%E7%94%B5%E6%96%91%E9%A9%AC"
+    },
+    "540": {
+      "chineseDescription": "头上的包包是感觉器官，两只虫宝包相遇时，会通过相互摩擦包包来打招呼哦。",
+      "version": "videx",
+      "official": true,
+      "source": "https://wiki.52poke.com/wiki/%E8%99%AB%E5%AE%9D%E5%8C%85"
+    },
+    "541": {
+      "chineseDescription": "用叶子包裹着身体保护自身。能通过头上的叶子感受空气的流动来探测周围事物。",
+      "version": "videx",
+      "official": true,
+      "source": "https://wiki.52poke.com/wiki/%E5%AE%9D%E5%8C%85%E8%8C%A7"
+    },
+    "542": {
+      "chineseDescription": "会将叶子缝制成衣服。虽然性格温驯，但对盯上了幼小的宝可梦的敌人绝不手软。",
+      "version": "videx",
+      "official": true,
+      "source": "https://wiki.52poke.com/wiki/%E4%BF%9D%E5%A7%86%E8%99%AB"
+    },
+    "580": {
+      "chineseDescription": "为了寻找水苔来吃，会在池中水深的地方游来游去，顺便锻炼身体。",
+      "version": "videx",
+      "official": true,
+      "source": "https://wiki.52poke.com/wiki/%E9%B8%AD%E5%AE%9D%E5%AE%9D"
+    },
+    "581": {
+      "chineseDescription": "会在黎明时分跳起优美的舞蹈，据说许多艺术家从中得到过灵感。",
+      "version": "videx",
+      "official": true,
+      "source": "https://wiki.52poke.com/wiki/%E8%88%9E%E5%A4%A9%E9%B9%85"
+    },
+    "585": {
+      "chineseDescription": "虽然外形很可爱，却因为喜爱吃草木的新芽而被农民们疏远。（春天的样子）随着季节流动，气味也会变化。如果它身上散发出了独特的青草味，那就代表夏天到了。（夏天的样子）随着季节流动，气味也会变化。这个样子的四季鹿散发的气味柔和香甜，会残留在鼻腔中。（秋天的样子）感情变好后会用头锤闹着玩。它的角藏在花朵里难以发现，被顶到还是会蛮痛的。（冬天的样子）",
+      "version": "videx",
+      "official": true,
+      "source": "https://wiki.52poke.com/wiki/%E5%9B%9B%E5%AD%A3%E9%B9%BF"
+    },
+    "586": {
+      "chineseDescription": "拥有许多爱好者的宝可梦。人们认为它角上绽放的淡红色花朵颜色越淡就代表越美丽。（春天的样子）它的叶子能用来做成红茶。根据产地会有不同的风味，产自帕底亚的叶子香气浓郁。（夏天的样子）秋天的样子的萌芽鹿以性情凶暴而闻名。雄性之间总是打架不断。（秋天的样子）这种宝可梦虽然拥有很多爱好者，但唯独这个季节的样子却没什么人喜欢。（冬天的样子）",
+      "version": "videx",
+      "official": true,
+      "source": "https://wiki.52poke.com/wiki/%E8%90%8C%E8%8A%BD%E9%B9%BF"
+    },
+    "602": {
+      "chineseDescription": "因为只能发出很弱的电，所以要许多麻麻小鱼聚集起来，才能放出强力的电来。",
+      "version": "zadex",
+      "official": true,
+      "source": "https://wiki.52poke.com/wiki/%E9%BA%BB%E9%BA%BB%E5%B0%8F%E9%B1%BC"
+    },
+    "603": {
+      "chineseDescription": "缠住对手，从圆圆的斑点放出电流通过对方身体，使其麻痹后啃食。",
+      "version": "zadex",
+      "official": true,
+      "source": "https://wiki.52poke.com/wiki/%E9%BA%BB%E9%BA%BB%E9%B3%97"
+    },
+    "604": {
+      "chineseDescription": "用吸盘一样的嘴巴吸住猎物，并从刺入的牙齿中释放电流，使对方触电。发电量是超级进化前的１０倍。会从由粘液构成的假麻麻鳗那里放电。（超级进化）",
+      "version": "zadex",
+      "official": true,
+      "source": "https://wiki.52poke.com/wiki/%E9%BA%BB%E9%BA%BB%E9%B3%97%E9%B1%BC%E7%8E%8B"
+    },
+    "641": {
+      "chineseDescription": "可引发风暴的宝可梦。传说由于它搅拌大气，季节因此得以循环不息。据本人考察，近似人类的形态才是假象而非真身。（化身形态）此乃被称为形态变化的现象。据考察，此一形同怪鸟的姿态才是其真正样貌。曾被目击以此姿态横越大海。（灵兽形态）",
+      "version": "ladex",
+      "official": true,
+      "source": "https://wiki.52poke.com/wiki/%E9%BE%99%E5%8D%B7%E4%BA%91"
+    },
+    "642": {
+      "chineseDescription": "传说它凭借自身的雷击，自古便与宿敌龙卷云不断斗争。它那贯穿大地的雷击使得土壤得到了精炼。（化身形态）在闪电霹雳中现身。会自尾部的连串珠子降下雷击扫荡敌手。惊人的威力足以令敌手片甲不留。（灵兽形态）",
+      "version": "ladex",
+      "official": true,
+      "source": "https://wiki.52poke.com/wiki/%E9%9B%B7%E7%94%B5%E4%BA%91"
+    },
+    "645": {
+      "chineseDescription": "会在旋风与电击的化身互相斗争之时现身并加以平息。在风暴与雷电过后，大地必将迎来丰收。（化身形态）以灵兽之姿翱翔天际时，会为大地带来丰收，因而受到众人崇敬。只需一刻光阴便能纵断洗翠大地。（灵兽形态）",
+      "version": "ladex",
+      "official": true,
+      "source": "https://wiki.52poke.com/wiki/%E5%9C%9F%E5%9C%B0%E4%BA%91"
+    },
+    "648": {
+      "chineseDescription": "用特殊的发声法唱出的旋律可以自由地操纵听者的情绪。（歌声形态）美洛耶塔找回了被遗忘已久的歌，以魅惑的舞步令众生为之倾倒。（舞步形态）",
+      "version": "zadex",
+      "official": true,
+      "source": "https://wiki.52poke.com/wiki/%E7%BE%8E%E6%B4%9B%E8%80%B6%E5%A1%94"
+    },
+    "649": {
+      "chineseDescription": "被某个组织复活的古生代的虫宝可梦。背上的大炮被改造了。装上填充了水能量的卡带的样子。会以飞行形态在空中飞翔。（水流卡带）装上填充了电能量的卡带的样子。会发射能量弹。（闪电卡带）装上填充了火能量的卡带的样子。拥有锐利的钢爪。（火焰卡带）装上填充了冰能量的卡带的样子。毫无慈悲之心。（冰冻卡带）",
+      "version": "zadex",
+      "official": true,
+      "source": "https://wiki.52poke.com/wiki/%E7%9B%96%E8%AF%BA%E8%B5%9B%E5%85%8B%E7%89%B9"
+    }
+  }
+}
