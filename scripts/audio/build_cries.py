@@ -62,8 +62,11 @@ def build(entry):
 def main():
     if not shutil.which('ffmpeg'):
         raise SystemExit('Install ffmpeg to regenerate cry assets; the app needs no external dependencies.')
-    entries = json.loads((ROOT / 'iDex/Resources/pokemon-kanto.json').read_text())
-    assert {entry['id'] for entry in entries} == set(range(1, 152))
+    entries = json.loads((ROOT / 'iDex/Resources/pokemon-catalog.json').read_text(encoding='utf-8'))
+    identifiers = {entry['id'] for entry in entries}
+    # Whatever the catalogue covers, cover exactly: a cry without an entry is
+    # unreachable, and an entry without a cry falls silent on a confirmed scan.
+    assert identifiers == set(range(1, len(entries) + 1)), 'catalogue ids are not contiguous from 1'
     OUTPUT.mkdir(parents=True, exist_ok=True)
     with concurrent.futures.ThreadPoolExecutor(max_workers=6) as pool:
         manifest = sorted(pool.map(build, entries), key=lambda item: item['id'])

@@ -1,5 +1,17 @@
 #!/usr/bin/env python3
-"""Rebuild the offline Kanto catalog from cached upstream CSVs and sprites."""
+"""Rebuild the offline catalogue from cached upstream CSVs and sprites.
+
+Covers 1..649 by default. The interface is built around Black/White pixel
+sprites, and those only exist up to Genesect; recognition reaches further, so
+the app reports anything past the catalogue as out of range rather than
+inventing an entry for it.
+
+PokeAPI carries no Simplified Chinese dex entry for 157 of those species.
+Those are filled from `wiki-descriptions.json`, which records whether each
+came from a game with an official Chinese localization or from a community
+translation. See fetch_wiki_descriptions.py.
+"""
+import argparse
 import concurrent.futures
 import csv
 import io
@@ -12,6 +24,9 @@ import zipfile
 ROOT = Path(__file__).resolve().parents[2]
 CACHE = ROOT / '.catalog-cache'
 RESOURCES = ROOT / 'iDex' / 'Resources'
+WIKI_DESCRIPTIONS = Path(__file__).resolve().parent / 'wiki-descriptions.json'
+# Genesect: the last species with a Black/White sprite.
+DEFAULT_MAX_SPECIES = 649
 CSV_BASE = 'https://raw.githubusercontent.com/PokeAPI/pokeapi/master/data/v2/csv/'
 FILES = ['pokemon.csv', 'pokemon_species_names.csv', 'pokemon_species_flavor_text.csv', 'pokemon_types.csv', 'types.csv', 'pokemon_stats.csv', 'stats.csv']
 
@@ -34,6 +49,17 @@ def rows(file):
     return list(csv.DictReader(io.StringIO(download(CSV_BASE + file, CACHE / file).decode('utf-8'))))
 
 def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--max-species', type=int, default=DEFAULT_MAX_SPECIES,
+                        help='Highest national dex number to include (default: the last '
+                             'species with a Black/White sprite)')
+    args = parser.parse_args()
+    maximum = args.max_species
+
+    wiki = {}
+    if WIKI_DESCRIPTIONS.exists():
+        wiki = json.loads(WIKI_DESCRIPTIONS.read_text(encoding='utf-8')).get('entries', {})
+
     with concurrent.futures.ThreadPoolExecutor(max_workers=4) as pool:
         csvs = dict(zip(FILES, pool.map(rows, FILES)))
     species_names = {(int(r['pokemon_species_id']), int(r['local_language_id'])): r for r in csvs['pokemon_species_names.csv']}
@@ -42,19 +68,28 @@ def main():
     flavor = {}
     # Retain the latest available text in each language (CSV is ordered by version id).
     for r in csvs['pokemon_species_flavor_text.csv']:
-        if int(r['species_id']) <= 151 and r['language_id'] in ('9', '11', '12'):
+        if int(r['species_id']) <= maximum and r['language_id'] in ('9', '11', '12'):
             normalized = ' '.join(r['flavor_text'].replace('\f', ' ').split())
             flavor[(int(r['species_id']), int(r['language_id']))] = normalized.replace(' ', '') if r['language_id'] == '12' else normalized
     entries = []
     slug_by_id = {}
     for p in csvs['pokemon.csv']:
         number = int(p['id'])
-        if not 1 <= number <= 151:
+        if not 1 <= number <= maximum:
             continue
         en = species_names[(number, 9)]
         zh = species_names[(number, 12)]
         ja = species_names[(number, 11)]
         slug_by_id[number] = p['identifier']
+        # PokeAPI has no Chinese entry for species absent from every game it has
+        # ingested Chinese text for. Fall back to the wiki, keeping track of
+        # whether that text is an official localization or a translation.
+        chinese_description = flavor.get((number, 12))
+        chinese_origin = 'official'
+        supplement = wiki.get(str(number))
+        if not chinese_description and supplement:
+            chinese_description = supplement['chineseDescription']
+            chinese_origin = 'official' if supplement['official'] else 'community'
         entry = {
             'id': number,
             'englishName': en['name'],
@@ -64,7 +99,8 @@ def main():
             'height': int(p['height']) / 10,
             'weight': int(p['weight']) / 10,
             'englishDescription': flavor[(number, 9)],
-            'chineseDescription': flavor[(number, 12)],
+            'chineseDescription': chinese_description,
+            'chineseDescriptionOrigin': chinese_origin,
             'japaneseDescription': flavor[(number, 11)],
             'englishGenus': en['genus'],
             'chineseGenus': zh['genus'],
@@ -72,11 +108,21 @@ def main():
             'stats': [{'name': stat_names[s['stat_id']], 'value': int(s['base_stat'])} for s in csvs['pokemon_stats.csv'] if int(s['pokemon_id']) == number]
         }
         entries.append(entry)
-    assert len(entries) == 151
-    assert all(p['chineseDescription'] and p['japaneseName'] and p['japaneseDescription']
-               and p['japaneseGenus'] and len(p['stats']) == 6 for p in entries)
+    assert len(entries) == maximum, f'expected {maximum} entries, built {len(entries)}'
+    assert all(p['japaneseName'] and p['japaneseDescription'] and p['japaneseGenus']
+               and p['englishDescription'] and len(p['stats']) == 6 for p in entries)
+    # Name a gap rather than failing on a bare assert: the fix is to rerun
+    # fetch_wiki_descriptions.py, which the message should say outright.
+    untranslated = [p['id'] for p in entries if not p['chineseDescription']]
+    if untranslated:
+        raise SystemExit(
+            f'{len(untranslated)} species have no Simplified Chinese dex entry: '
+            f'{untranslated[:20]}{"..." if len(untranslated) > 20 else ""}\n'
+            'Run scripts/catalog/fetch_wiki_descriptions.py to refresh '
+            f'{WIKI_DESCRIPTIONS.name}, then build again.')
+    community = [p['id'] for p in entries if p['chineseDescriptionOrigin'] == 'community']
     RESOURCES.mkdir(parents=True, exist_ok=True)
-    (RESOURCES / 'pokemon-kanto.json').write_text(json.dumps(entries, ensure_ascii=False, indent=2) + '\n')
+    (RESOURCES / 'pokemon-catalog.json').write_text(json.dumps(entries, ensure_ascii=False, indent=2) + '\n')
     assets = RESOURCES / 'PokemonSprites.xcassets'
     assets.mkdir(exist_ok=True)
     (assets / 'Contents.json').write_text(json.dumps({'info': {'author': 'xcode', 'version': 1}}, indent=2))
@@ -118,7 +164,10 @@ def main():
                     output_name = 'FusionPixel-12px-ja.otf'
                 output = font_dir / output_name
                 output.write_bytes(zipped.read(name))
-    print(f'Built {len(entries)} English, Simplified Chinese, and Japanese entries and {len(sources)} sprites.')
+    print(f'Built {len(entries)} English, Simplified Chinese, and Japanese entries '
+          f'and {len(sources)} sprites.')
+    print(f'Chinese dex entries: {len(entries) - len(community)} official, '
+          f'{len(community)} community translation.')
     print('Pikachu:', entries[24])
     print('Fonts:', [p.name for p in font_dir.iterdir()])
 
