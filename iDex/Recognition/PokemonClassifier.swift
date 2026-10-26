@@ -85,13 +85,16 @@ actor PokemonClassifier {
         guard model == nil else { return }
         let interval = DexPerformance.begin("Model Load")
         defer { DexPerformance.end("Model Load", interval) }
-        guard let url = Bundle.main.url(forResource: "KantoClassifier", withExtension: "mlmodelc") else {
+        guard let url = Bundle.main.url(forResource: "NationalClassifier", withExtension: "mlmodelc") else {
             throw RecognitionError.missingModel
         }
+        // Labels must run 1...n without gaps, because a logit's position is
+        // what identifies the species. The model reaches past the catalogue on
+        // purpose, so the only size requirement is that it covers it.
         guard let labelURL = Bundle.main.url(forResource: "pokemon_labels", withExtension: "json"),
               let loadedLabels = try? JSONDecoder().decode([Label].self, from: Data(contentsOf: labelURL)),
-              loadedLabels.count == 151,
-              Set(loadedLabels.map(\.id)) == Set(1...151) else {
+              loadedLabels.count >= PokemonCatalog.shared.speciesCount,
+              Set(loadedLabels.map(\.id)) == Set(1...loadedLabels.count) else {
             throw RecognitionError.invalidLabels
         }
         let configuration = MLModelConfiguration()

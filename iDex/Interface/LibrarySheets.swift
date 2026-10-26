@@ -38,7 +38,7 @@ struct CatalogSheet: View {
                 }
             }
             .background(DexTheme.charcoal)
-            .navigationTitle(store.text("Kanto archive", "关都图鉴", "カントー図鑑"))
+            .navigationTitle(store.text("National archive", "全国图鉴", "全国図鑑"))
             .navigationBarTitleDisplayMode(.inline)
             .searchable(text: $query, placement: .navigationBarDrawer(displayMode: .always), prompt: store.text("Name, number or type", "名称、编号或属性", "名前・番号・タイプ"))
             .toolbar { ToolbarItem(placement: .confirmationAction) { Button(store.text("Done", "完成", "完了")) { store.showingCatalog = false }.accessibilityIdentifier("settings-done") } }
@@ -82,7 +82,7 @@ struct SettingsSheet: View {
                     Label(store.text("Point at a Pokémon, then identify.", "将取景器对准宝可梦，轻点识别。", "ポケモンにカメラを向けて、スキャンします。"), systemImage: "viewfinder")
                     Label(store.text("Unfold to reveal the research panel.", "展开屏幕，查看内部研究面板。", "画面を開くと、リサーチパネルが表示されます。"), systemImage: "book")
                     Label(store.text("Photos and recognition stay on your iPhone.", "照片与识别过程均留在你的 iPhone 上。", "写真と識別処理は、すべて iPhone 内で完結します。"), systemImage: "lock.shield")
-                    Text(store.text("The bundled model recognizes the original 151 Kanto Pokémon. Uncertain scans ask you to try again. Samples use the same model as your camera.", "内置模型可识别最初的151种关都宝可梦。匹配不确定时会提示重试。样本与相机使用相同的识别模型。", "内蔵モデルは、カントー地方の最初の151種のポケモンを識別します。結果が不確かな場合は、再スキャンをお試しください。サンプルとカメラは同じ識別モデルを使います。"))
+                    Text(store.text("The bundled model recognizes all 1025 Pokémon; this archive holds the \(PokemonCatalog.shared.speciesCount) with Black/White sprites, and says so when a scan falls outside it. Uncertain scans ask you to try again. Samples use the same model as your camera.", "内置模型可识别全部1025种宝可梦；本图鉴收录其中拥有黑白版图像的\(PokemonCatalog.shared.speciesCount)种，扫描到收录范围外时会如实告知。匹配不确定时会提示重试。样本与相机使用相同的识别模型。", "内蔵モデルは1025種すべてを識別します。この図鑑には、ブラック・ホワイトのドット絵がある\(PokemonCatalog.shared.speciesCount)種を収録しており、範囲外は収録外として表示します。結果が不確かな場合は、再スキャンをお試しください。サンプルとカメラは同じ識別モデルを使います。"))
                         .font(.footnote).foregroundStyle(.secondary)
                 }
                 Section(store.text("Credits", "制作信息", "クレジット")) {

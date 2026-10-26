@@ -174,9 +174,24 @@ final class DexStore {
     }
 
     func applyRecognition(_ result: RecognitionResult) throws {
-        guard let match = result.candidates.first,
-              let pokemon = PokemonCatalog.shared.pokemon(id: match.dexID) else {
+        guard let match = result.candidates.first else {
             throw RecognitionError.invalidOutput
+        }
+        guard let pokemon = PokemonCatalog.shared.pokemon(id: match.dexID) else {
+            // The model knows every species; the archive stops at the last one
+            // with a Black/White sprite. Report the gap rather than failing, and
+            // never record it as a discovery. The model's own label is the only
+            // name available here, so it stays English.
+            candidates = result.candidates
+            scanResult = result
+            capturedImage = nil
+            confidence = match.confidence
+            identified = false
+            message = text("\(match.name) is outside this archive.",
+                           "\(match.name) 不在本图鉴的收录范围内。",
+                           "\(match.name) はこの図鑑の収録範囲外です。")
+            audio.play(.error)
+            return
         }
         candidates = result.candidates
         selected = pokemon
@@ -211,7 +226,9 @@ final class DexStore {
         audio.stopSpeaking()
         cancelScan()
         guard let selected else { return }
-        let id = ((selected.id - 1 + delta + 151) % 151) + 1
+        let count = PokemonCatalog.shared.speciesCount
+        guard count > 0 else { return }
+        let id = ((selected.id - 1 + delta % count + count) % count) + 1
         self.selected = PokemonCatalog.shared.pokemon(id: id)
         confidence = nil
         identified = false

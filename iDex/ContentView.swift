@@ -292,7 +292,9 @@ private struct ScannerPanel: View {
                         pixel(compact ? store.text("OPEN RECORD", "打开记录", "図鑑を開く") : store.text("POKÉDEX", "宝可梦图鉴", "ポケモン図鑑"), 8)
                     }
                 }.buttonStyle(.plain).accessibilityIdentifier("record-button")
-                pixel(store.text("\(store.seenIDs.count) SEEN · 151 SPECIES", "已发现 \(store.seenIDs.count) · 共151种", "発見 \(store.seenIDs.count) · 全151種"), 6)
+                pixel(store.text("\(store.seenIDs.count) SEEN · \(PokemonCatalog.shared.speciesCount) SPECIES",
+                                 "已发现 \(store.seenIDs.count) · 共\(PokemonCatalog.shared.speciesCount)种",
+                                 "発見 \(store.seenIDs.count) · 全\(PokemonCatalog.shared.speciesCount)種"), 6)
                     .foregroundStyle(.white.opacity(0.5))
             }.foregroundStyle(DexTheme.cream)
             Spacer()

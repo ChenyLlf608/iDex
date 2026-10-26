@@ -40,8 +40,18 @@ jobs:
         with:
           python-version: '3.11'
 
-      - name: Install ffmpeg
-        run: sudo apt-get update && sudo apt-get install -y ffmpeg
+      # Usually preinstalled on the runner image. Only reach for apt when it
+      # is not, and fail fast: a hung mirror once ate the whole job budget
+      # before the first fetch had started.
+      - name: Ensure ffmpeg
+        timeout-minutes: 8
+        run: |
+          if command -v ffmpeg >/dev/null 2>&1; then
+            ffmpeg -version | head -1
+            exit 0
+          fi
+          sudo apt-get update -qq
+          sudo apt-get install -y --no-install-recommends ffmpeg
 
       - name: Fetch Chinese dex entries missing from PokeAPI
         if: ${{ inputs.refresh_wiki }}

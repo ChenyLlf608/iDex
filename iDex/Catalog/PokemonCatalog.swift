@@ -69,6 +69,12 @@ struct Pokemon: Identifiable, Codable, Hashable {
     let weight: Double
     let englishDescription: String
     let chineseDescription: String
+    /// `official` or `community`. PokeAPI carries no Chinese entry for many
+    /// species, and the gaps are filled from 52poke; where the species never
+    /// appeared in a game with an official Chinese localization, that text is
+    /// a translation and the interface says so rather than implying otherwise.
+    /// Optional so a catalogue built before this existed still decodes.
+    let chineseDescriptionOrigin: String?
     let japaneseDescription: String
     let englishGenus: String
     let chineseGenus: String
@@ -85,6 +91,13 @@ struct Pokemon: Identifiable, Codable, Hashable {
 
     func description(in language: AppLanguage) -> String {
         language.text(englishDescription, chineseDescription, japaneseDescription)
+    }
+
+    /// True when the text shown is a community translation rather than an
+    /// official localization, so the interface can attribute it honestly.
+    /// Only Chinese has such gaps; English and Japanese come from the games.
+    func descriptionIsCommunityTranslation(in language: AppLanguage) -> Bool {
+        language == .zhHans && chineseDescriptionOrigin == "community"
     }
 
     func genus(in language: AppLanguage) -> String {
@@ -133,6 +146,10 @@ struct Pokemon: Identifiable, Codable, Hashable {
 struct PokemonCatalog {
     static let shared = PokemonCatalog()
     let entries: [Pokemon]
+    /// How many species the catalogue covers: the one place the interface asks.
+    /// Recognition reaches past this, and scans beyond it are reported as out
+    /// of range rather than matched to an entry that does not exist.
+    var speciesCount: Int { entries.count }
     private let entriesByID: [Int: Pokemon]
     private let searchIndex: [SearchEntry]
 
@@ -153,10 +170,10 @@ struct PokemonCatalog {
     }
 
     private init(bundle: Bundle = .main) {
-        guard let url = bundle.url(forResource: "pokemon-kanto", withExtension: "json"),
+        guard let url = bundle.url(forResource: "pokemon-catalog", withExtension: "json"),
               let data = try? Data(contentsOf: url),
               let decoded = try? JSONDecoder().decode([Pokemon].self, from: data) else {
-            assertionFailure("The bundled Kanto catalog is missing or invalid.")
+            assertionFailure("The bundled catalog is missing or invalid.")
             entries = []
             entriesByID = [:]
             searchIndex = []

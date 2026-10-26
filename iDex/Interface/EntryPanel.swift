@@ -81,10 +81,22 @@ struct EntryPanel: View {
                             }.frame(height: 104)
                         } else {
                             ScrollView {
-                                Text(pokemon.description(in: store.language))
-                                    .font(PixelFont.font(size: store.language == .en ? 8 : 17, language: store.language))
-                                    .lineSpacing(store.language == .en ? 7 : 5)
-                                    .frame(maxWidth: .infinity, alignment: .leading)
+                                VStack(alignment: .leading, spacing: 5) {
+                                    Text(pokemon.description(in: store.language))
+                                        .font(PixelFont.font(size: store.language == .en ? 8 : 17, language: store.language))
+                                        .lineSpacing(store.language == .en ? 7 : 5)
+                                    // PokeAPI has no Chinese entry for some
+                                    // species; where the fill-in is a
+                                    // translation rather than official text,
+                                    // say so instead of passing it off.
+                                    if pokemon.descriptionIsCommunityTranslation(in: store.language) {
+                                        Text(store.text("Community translation · 52poke",
+                                                        "社区翻译 · 宝可梦百科",
+                                                        "有志翻訳 · 52poke"))
+                                            .font(PixelFont.font(size: store.language == .en ? 6 : 11, language: store.language))
+                                            .foregroundStyle(DexTheme.cream.opacity(0.5))
+                                    }
+                                }.frame(maxWidth: .infinity, alignment: .leading)
                             }.frame(minHeight: 64, idealHeight: 104, maxHeight: 104)
                         }
                     }
@@ -108,7 +120,10 @@ struct EntryPanel: View {
                     Button { store.showingCatalog = true; store.audio.play(.button) } label: {
                         HStack(spacing: 8) {
                             Image(systemName: "square.grid.2x2.fill")
-                            Text(store.text("BROWSE 151", "浏览151种", "全151種を見る")).font(PixelFont.font(size: store.language == .en ? 8 : 14, language: store.language))
+                            Text(store.text("BROWSE \(PokemonCatalog.shared.speciesCount)",
+                                            "浏览\(PokemonCatalog.shared.speciesCount)种",
+                                            "全\(PokemonCatalog.shared.speciesCount)種を見る"))
+                                .font(PixelFont.font(size: store.language == .en ? 8 : 14, language: store.language))
                         }
                     }.buttonStyle(.plain).foregroundStyle(DexTheme.cream).accessibilityIdentifier("catalog-button")
                     Spacer()
