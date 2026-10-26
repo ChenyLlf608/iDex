@@ -1,0 +1,69 @@
+name: Build unsigned IPA
+
+on:
+  push:
+    branches: [main, build-ipa]
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Archive iDex (unsigned)
+    runs-on: xcode-27
+    timeout-minutes: 45
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Show toolchain
+        run: |
+          sw_vers
+          xcodebuild -version
+          xcodebuild -showsdks | grep -i ios || true
+
+      - name: List schemes and targets
+        run: xcodebuild -list -project iDex.xcodeproj
+
+      - name: Archive (code signing disabled)
+        run: |
+          set -o pipefail
+          xcodebuild archive \
+            -project iDex.xcodeproj \
+            -scheme iDex \
+            -configuration Release \
+            -destination 'generic/platform=iOS' \
+            -archivePath "$RUNNER_TEMP/iDex.xcarchive" \
+            CODE_SIGNING_ALLOWED=NO \
+            CODE_SIGNING_REQUIRED=NO \
+            CODE_SIGN_IDENTITY="" \
+            DEVELOPMENT_TEAM="" \
+            PROVISIONING_PROFILE_SPECIFIER="" \
+            | xcbeautify
+
+      - name: Package into .ipa
+        run: |
+          set -euo pipefail
+          APP="$RUNNER_TEMP/iDex.xcarchive/Products/Applications/iDex.app"
+          test -d "$APP" || { echo "::error::iDex.app not found in archive"; ls -R "$RUNNER_TEMP/iDex.xcarchive/Products" || true; exit 1; }
+          mkdir -p "$RUNNER_TEMP/pkg/Payload"
+          cp -R "$APP" "$RUNNER_TEMP/pkg/Payload/"
+          # A free-developer resign (Sideloadly / AltStore) replaces any signature,
+          # so strip the placeholder one to avoid confusing the tools.
+          rm -rf "$RUNNER_TEMP/pkg/Payload/iDex.app/_CodeSignature"
+          mkdir -p "$GITHUB_WORKSPACE/dist"
+          cd "$RUNNER_TEMP/pkg"
+          zip -qry "$GITHUB_WORKSPACE/dist/iDex-unsigned.ipa" Payload
+          ls -lh "$GITHUB_WORKSPACE/dist/iDex-unsigned.ipa"
+
+      - name: Report bundle info
+        run: |
+          plutil -p "$RUNNER_TEMP/iDex.xcarchive/Products/Applications/iDex.app/Info.plist" \
+            | grep -iE "CFBundleIdentifier|CFBundleShortVersionString|CFBundleVersion|MinimumOSVersion|UIDeviceFamily" || true
+
+      - name: Upload IPA
+        uses: actions/upload-artifact@v4
+        with:
+          name: iDex-unsigned-ipa
+          path: dist/iDex-unsigned.ipa
+          if-no-files-found: error
+          retention-days: 30
