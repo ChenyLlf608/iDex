@@ -35,7 +35,7 @@ From the repository root, use a separate environment:
 uv venv --python 3.11 /tmp/idex-coreml-env
 uv pip install --python /tmp/idex-coreml-env/bin/python -r scripts/model/requirements.txt
 /tmp/idex-coreml-env/bin/python scripts/model/convert_model.py --verify --verify-sprites
-xcrun coremlc compile iDex/Recognition/KantoClassifier.mlpackage /tmp/idex-model-compiled
+xcrun coremlc compile iDex/Recognition/NationalClassifier.mlpackage /tmp/idex-model-compiled
 ```
 
 The source checkpoint is downloaded into `/tmp/idex-model-source`, outside the app and repository. `convert_model.py` regenerates the Core ML package and labels, then optionally compares Core ML with PyTorch on two upstream examples and three synthetic negatives. Recorded outputs are in `scripts/model/verification.json`.
