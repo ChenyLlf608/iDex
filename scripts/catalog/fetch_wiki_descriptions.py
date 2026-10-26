@@ -91,12 +91,16 @@ def chinese_names(maximum: int) -> dict[int, str]:
 def wikitext(title: str) -> tuple[str | None, str]:
     """Returns the page source and the title it actually resolved to.
 
-    Redirects have to be followed: PokeAPI's Simplified Chinese names are not
-    always the wiki's article title. Minun is filed under 負电拍拍 there, whose
-    first character is the traditional form, and without redirects=1 the API
-    hands back the redirect stub with no content.
+    Two lookups have to be relaxed. Redirects are followed, and titles are run
+    through the wiki's own Simplified Chinese variant conversion: PokeAPI's
+    zh-Hans names are not always written the way the wiki files them. Minun's
+    is 負电拍拍, whose first character is the traditional form, and no page or
+    redirect exists under that spelling -- converttitles maps it to 负电拍拍.
+    Doing this through the wiki rather than a local character table keeps the
+    two in agreement for any name, not just the one that happened to break.
     """
-    url = (f"{API}?action=query&titles={urllib.parse.quote(title)}&redirects=1"
+    url = (f"{API}?action=query&titles={urllib.parse.quote(title)}"
+           "&redirects=1&converttitles=1&variant=zh-hans"
            "&prop=revisions&rvprop=content&rvslots=main&format=json&formatversion=2")
     payload = json.loads(get(url).decode("utf-8"))["query"]
     page = payload["pages"][0]
