@@ -82,6 +82,14 @@ nonisolated final class AudioPlaybackWorker: DeviceAudioPlayback, @unchecked Sen
     private var synthesizer: AVSpeechSynthesizer?
     private var speechObserver: SpeechPlaybackObserver?
     private var voices: [String: AVSpeechSynthesisVoice] = [:]
+    /// Speech is rendered offline and played as one buffer, so it needs its own
+    /// node: scheduling it on the cue player would cut a cry short.
+    private var speechPlayer: AVAudioPlayerNode?
+    private var speechRequest: AudioPlaybackRequest?
+    /// Playback state of the rendered reading. The synthesizer's own
+    /// `isSpeaking` only covers its direct output, which the retro path bypasses.
+    private var speechPlaying = false
+    private let retroVoice = RetroVoiceProcessor(preset: .classic)
 
     init(soundVolume: Float = 0.32, speechVolume: Float = 0.9) {
         self.soundVolume = soundVolume
@@ -127,17 +135,30 @@ nonisolated final class AudioPlaybackWorker: DeviceAudioPlayback, @unchecked Sen
             let engine = AVAudioEngine()
             let player = AVAudioPlayerNode()
             let chimes = AVAudioMixerNode()
+            let chimeGain = AVAudioMixerNode()
+            let speech = AVAudioPlayerNode()
+            let speechGain = AVAudioMixerNode()
             engine.attach(player)
             engine.attach(chimes)
+            engine.attach(chimeGain)
+            engine.attach(speech)
+            engine.attach(speechGain)
             try engine.connectNode(player, to: chimes, format: format)
-            try engine.connectNode(chimes, to: engine.mainMixerNode, format: format)
+            try engine.connectNode(chimes, to: chimeGain, format: format)
+            try engine.connectNode(chimeGain, to: engine.mainMixerNode, format: format)
+            // The reading joins the graph past the cue tap, so its level stays
+            // independent of the chime gain the tests mute.
+            try engine.connectNode(speech, to: speechGain, format: format)
+            try engine.connectNode(speechGain, to: engine.mainMixerNode, format: format)
             // Observe real rendered PCM before the final gain. Tests mute that
             // gain while still proving a cue reached the live render graph.
             let progress = rendered
             try chimes.installAudioTap(onBus: 0, bufferSize: 256, format: format) { buffer, _ in
                 progress.record(buffer)
             }
-            engine.mainMixerNode.outputVolume = soundVolume
+            chimeGain.outputVolume = soundVolume
+            speechGain.outputVolume = speechVolume
+            engine.mainMixerNode.outputVolume = 1
             for cue in DeviceSound.allCases {
                 let samples = DeviceSoundWave.samples(for: cue)
                 guard let buffer = AVAudioPCMBuffer(pcmFormat: format, frameCapacity: AVAudioFrameCount(samples.count)),
@@ -150,6 +171,7 @@ nonisolated final class AudioPlaybackWorker: DeviceAudioPlayback, @unchecked Sen
             }
             self.engine = engine
             self.player = player
+            self.speechPlayer = speech
         }
         guard let engine, let player else { throw PlaybackError.invalidFormat }
         if !engine.isRunning {
@@ -158,6 +180,7 @@ nonisolated final class AudioPlaybackWorker: DeviceAudioPlayback, @unchecked Sen
             try engine.start()
             // No tone is scheduled during startup: output begins with silence.
             try player.playAudio()
+            try speechPlayer?.playAudio()
         }
     }
 
@@ -285,24 +308,153 @@ nonisolated final class AudioPlaybackWorker: DeviceAudioPlayback, @unchecked Sen
                 synthesizer.usesApplicationAudioSession = true
                 self.synthesizer = synthesizer
             }
-            let voice = self.voices[languageCode] ?? AVSpeechSynthesisVoice(language: languageCode)
+            self.speechPlayer?.stop()
+            self.speechRequest = request
+            self.speechPlaying = false
+            let voice = self.voices[languageCode] ?? Self.narrationVoice(for: languageCode)
             if let voice { self.voices[languageCode] = voice }
-            let utterance = AVSpeechUtterance(string: text)
-            utterance.voice = voice
-            utterance.rate = languageCode.hasPrefix("zh") ? 0.43 : 0.46
-            utterance.pitchMultiplier = 0.84
-            utterance.volume = self.speechVolume
-            utterance.preUtteranceDelay = 0.28
             guard !request.isCancelled else { return }
-            let observer = SpeechPlaybackObserver(utterance: utterance, request: request)
-            self.speechObserver = observer
-            synthesizer.delegate = observer
-            synthesizer.speak(utterance)
+            self.render(text: text, languageCode: languageCode, voice: voice,
+                        on: synthesizer, request: request)
         }
     }
 
+    /// Silence ahead of the reading, so it does not tread on the cry that
+    /// confirms a scan.
+    private static let speechLeadIn = 0.2
+
+    /// A male voice at the smoothest quality the device has installed. The
+    /// electronic character is supplied deliberately by `RetroVoiceProcessor`,
+    /// so the source should be as fluent as possible rather than as synthetic
+    /// as possible: a compact voice only sounds broken once the chain runs.
+    private static func narrationVoice(for languageCode: String) -> AVSpeechSynthesisVoice? {
+        let available = AVSpeechSynthesisVoice.speechVoices()
+        let prefix = languageCode.prefix(2).lowercased()
+        let sameLanguage = available.filter { $0.language.lowercased().hasPrefix(prefix) }
+        guard !sameLanguage.isEmpty else { return AVSpeechSynthesisVoice(language: languageCode) }
+        let exact = sameLanguage.filter { $0.language.caseInsensitiveCompare(languageCode) == .orderedSame }
+        let pool = exact.isEmpty ? sameLanguage : exact
+        // Fall back to the whole pool where no male voice is installed, rather
+        // than going silent on that language.
+        let male = pool.filter { $0.gender == .male }
+        let candidates = male.isEmpty ? pool : male
+        return candidates.max { Self.fluency($0) < Self.fluency($1) }
+            ?? AVSpeechSynthesisVoice(language: languageCode)
+    }
+
+    private static func fluency(_ voice: AVSpeechSynthesisVoice) -> Int {
+        switch voice.quality {
+        case .premium: return 3
+        case .enhanced: return 2
+        default: return 1
+        }
+    }
+
+    /// Rate sits just above the system default. The effect chain costs some
+    /// intelligibility, but a slow reading sounded laboured rather than retro.
+    private static func utterance(text: String, languageCode: String,
+                                  voice: AVSpeechSynthesisVoice?) -> AVSpeechUtterance {
+        let utterance = AVSpeechUtterance(string: text)
+        utterance.voice = voice
+        utterance.rate = languageCode.hasPrefix("zh") ? 0.52 : 0.54
+        // The band-pass already removes the fundamental, so lowering the pitch
+        // any further only muddies a male voice.
+        utterance.pitchMultiplier = 0.95
+        utterance.volume = 1
+        return utterance
+    }
+
+    /// Synthesis is written to buffers instead of spoken directly: the retro
+    /// chain needs the whole reading before it can normalize it, and playing
+    /// one finished buffer also removes the stutter of streamed synthesis.
+    private func render(text: String, languageCode: String, voice: AVSpeechSynthesisVoice?,
+                        on synthesizer: AVSpeechSynthesizer, request: AudioPlaybackRequest) {
+        let collector = SpeechSampleCollector()
+        synthesizer.write(Self.utterance(text: text, languageCode: languageCode, voice: voice)) { [weak self] buffer in
+            guard let self, let pcm = buffer as? AVAudioPCMBuffer else { return }
+            guard pcm.frameLength == 0 else {
+                collector.append(pcm)
+                return
+            }
+            // A zero-length buffer terminates synthesis for this utterance.
+            guard collector.finish() else { return }
+            let rendered = collector.drain()
+            self.queue.async {
+                self.playRendered(rendered.samples, sourceRate: rendered.rate, text: text,
+                                  languageCode: languageCode, voice: voice,
+                                  on: synthesizer, request: request)
+            }
+        }
+    }
+
+    private func playRendered(_ samples: [Float], sourceRate: Double, text: String,
+                              languageCode: String, voice: AVSpeechSynthesisVoice?,
+                              on synthesizer: AVSpeechSynthesizer, request: AudioPlaybackRequest) {
+        guard !request.isCancelled, speechRequest === request else { return }
+        guard !samples.isEmpty else {
+            // Nothing was rendered. Read the entry plainly rather than drop it.
+            Self.logger.error("Speech rendering produced no samples; reading without the effect chain")
+            speakDirectly(text: text, languageCode: languageCode, voice: voice,
+                          on: synthesizer, request: request)
+            return
+        }
+        do {
+            try startEngine()
+            guard let speechPlayer,
+                  let format = AVAudioFormat(standardFormatWithSampleRate: DeviceSoundWave.sampleRate, channels: 1)
+            else { throw PlaybackError.invalidFormat }
+            var voiced = RetroVoiceProcessor.resample(samples, from: sourceRate, to: DeviceSoundWave.sampleRate)
+            retroVoice.process(&voiced, sampleRate: DeviceSoundWave.sampleRate)
+            var frames = [Float](repeating: 0, count: Int(Self.speechLeadIn * DeviceSoundWave.sampleRate))
+            frames.append(contentsOf: voiced)
+            guard let buffer = AVAudioPCMBuffer(pcmFormat: format, frameCapacity: AVAudioFrameCount(frames.count)),
+                  let channel = buffer.floatChannelData?[0] else { throw PlaybackError.invalidFormat }
+            buffer.frameLength = AVAudioFrameCount(frames.count)
+            frames.withUnsafeBufferPointer { source in
+                if let base = source.baseAddress { channel.update(from: base, count: source.count) }
+            }
+            guard !request.isCancelled else { return }
+            speechPlayer.stop()
+            speechPlaying = true
+            request.reportSpeechActivity(true)
+            speechPlayer.scheduleBuffer(buffer, atTime: nil, options: [], completionCallbackType: .dataPlayedBack) { [weak self] in
+                guard let self else { return }
+                self.queue.async {
+                    guard self.speechRequest === request else { return }
+                    self.speechRequest = nil
+                    self.speechPlaying = false
+                    request.reportSpeechActivity(false)
+                }
+            }
+            try speechPlayer.playAudio()
+        } catch {
+            Self.logger.error("Speech playback failed: \(error.localizedDescription, privacy: .public)")
+            speechPlaying = false
+            request.reportSpeechActivity(false)
+        }
+    }
+
+    /// An utterance consumed by `write` cannot be spoken again, so the fallback
+    /// builds its own.
+    private func speakDirectly(text: String, languageCode: String, voice: AVSpeechSynthesisVoice?,
+                               on synthesizer: AVSpeechSynthesizer, request: AudioPlaybackRequest) {
+        guard !request.isCancelled else { return }
+        let utterance = Self.utterance(text: text, languageCode: languageCode, voice: voice)
+        utterance.volume = speechVolume
+        utterance.preUtteranceDelay = Self.speechLeadIn
+        let observer = SpeechPlaybackObserver(utterance: utterance, request: request)
+        speechObserver = observer
+        synthesizer.delegate = observer
+        synthesizer.speak(utterance)
+    }
+
     func stopSpeaking() {
-        queue.async { self.synthesizer?.stopSpeaking(at: .immediate) }
+        queue.async {
+            self.speechRequest = nil
+            self.speechPlaying = false
+            self.speechPlayer?.stop()
+            self.synthesizer?.stopSpeaking(at: .immediate)
+        }
     }
 
     /// A nonblocking snapshot also waits for previously enqueued commands.
@@ -314,7 +466,7 @@ nonisolated final class AudioPlaybackWorker: DeviceAudioPlayback, @unchecked Sen
                     cachedSoundCount: self.buffers.count,
                     hasSpeechSynthesizer: self.synthesizer != nil,
                     soundIsPlaying: self.currentRequest != nil && (self.player?.isPlaying ?? false),
-                    speechIsSpeaking: self.synthesizer?.isSpeaking ?? false,
+                    speechIsSpeaking: self.speechPlaying || (self.synthesizer?.isSpeaking ?? false),
                     renderedFrames: progress.frames,
                     renderedSignalFrames: progress.signalFrames,
                     outputPorts: AVAudioSession.sharedInstance().currentRoute.outputs.map { $0.portType.rawValue },
@@ -338,6 +490,46 @@ nonisolated final class AudioPlaybackWorker: DeviceAudioPlayback, @unchecked Sen
         let isOnMainThread: Bool
         let hasSwiftTask: Bool
     }
+}
+
+/// Collects the buffers `AVSpeechSynthesizer.write` delivers. The callback
+/// arrives on the synthesizer's own queue, so the samples are guarded and the
+/// terminator is latched: a repeated zero-length buffer must not schedule the
+/// same reading twice.
+nonisolated private final class SpeechSampleCollector: @unchecked Sendable {
+    private let lock = NSLock()
+    private var samples: [Float] = []
+    private var rate = DeviceSoundWave.sampleRate
+    private var finished = false
+
+    /// True only for the first caller.
+    func finish() -> Bool {
+        lock.withLock {
+            if finished { return false }
+            finished = true
+            return true
+        }
+    }
+
+    func append(_ buffer: AVAudioPCMBuffer) {
+        let frames = Int(buffer.frameLength)
+        guard frames > 0 else { return }
+        var chunk = [Float](repeating: 0, count: frames)
+        if let channel = buffer.floatChannelData?[0] {
+            for index in 0..<frames { chunk[index] = channel[index] }
+        } else if let channel = buffer.int16ChannelData?[0] {
+            for index in 0..<frames { chunk[index] = Float(channel[index]) / 32_768 }
+        } else {
+            return
+        }
+        lock.withLock {
+            guard !finished else { return }
+            rate = buffer.format.sampleRate
+            samples.append(contentsOf: chunk)
+        }
+    }
+
+    func drain() -> (samples: [Float], rate: Double) { lock.withLock { (samples, rate) } }
 }
 
 /// A small tap on the chime mixer confirms hardware output is running. This
