@@ -88,13 +88,22 @@ def chinese_names(maximum: int) -> dict[int, str]:
     return names
 
 
-def wikitext(title: str) -> str | None:
-    url = (f"{API}?action=query&titles={urllib.parse.quote(title)}"
+def wikitext(title: str) -> tuple[str | None, str]:
+    """Returns the page source and the title it actually resolved to.
+
+    Redirects have to be followed: PokeAPI's Simplified Chinese names are not
+    always the wiki's article title. Minun is filed under 負电拍拍 there, whose
+    first character is the traditional form, and without redirects=1 the API
+    hands back the redirect stub with no content.
+    """
+    url = (f"{API}?action=query&titles={urllib.parse.quote(title)}&redirects=1"
            "&prop=revisions&rvprop=content&rvslots=main&format=json&formatversion=2")
-    page = json.loads(get(url).decode("utf-8"))["query"]["pages"][0]
+    payload = json.loads(get(url).decode("utf-8"))["query"]
+    page = payload["pages"][0]
+    resolved = page.get("title", title)
     if page.get("missing"):
-        return None
-    return page["revisions"][0]["slots"]["main"]["content"]
+        return None, resolved
+    return page["revisions"][0]["slots"]["main"]["content"], resolved
 
 
 def template_body(text: str, name: str) -> str | None:
@@ -199,21 +208,22 @@ def main() -> None:
             failures.append({"id": identifier, "reason": "no Chinese name in PokeAPI"})
             continue
         try:
-            text = wikitext(title)
+            text, resolved = wikitext(title)
         except Exception as error:
             failures.append({"id": identifier, "title": title, "reason": f"fetch failed: {error}"})
             continue
         body = template_body(text, "图鉴") if text else None
         chosen = choose(entries(body)) if body else None
         if not chosen:
-            failures.append({"id": identifier, "title": title, "reason": "no usable dex entry"})
+            failures.append({"id": identifier, "title": title, "resolved": resolved,
+                             "reason": "page missing" if not text else "no usable dex entry"})
             continue
         description, version, official = chosen
         results[str(identifier)] = {
             "chineseDescription": description,
             "version": version,
             "official": official,
-            "source": f"https://wiki.52poke.com/wiki/{title}",
+            "source": f"https://wiki.52poke.com/wiki/{urllib.parse.quote(resolved)}",
         }
         if position % 25 == 0:
             print(f"  {position}/{len(wanted)}", file=sys.stderr)
