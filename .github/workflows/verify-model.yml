@@ -1,0 +1,66 @@
+name: Verify full-dex candidate
+
+# Answers one question before any catalogue work: does a 1025-class model still
+# identify the 151 species this app already ships? Runs on Linux because only
+# PyTorch is needed here — Core ML conversion is a separate, later concern.
+
+on:
+  workflow_dispatch:
+    inputs:
+      repository:
+        description: Hugging Face model id
+        default: skshmjn/Pokemon-classifier-gen9-1025
+      revision:
+        description: Pinned commit on that model
+        default: 9e8d54de136b99afc212322eae13ddc07a6fd779
+
+jobs:
+  verify:
+    name: Sprite check
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install torch --index-url https://download.pytorch.org/whl/cpu
+          python -m pip install transformers pillow numpy
+
+      - name: Verify with the shipped check's nearest-neighbour resize
+        run: |
+          python scripts/model/verify_gen9.py \
+            --repository "${{ inputs.repository }}" \
+            --revision "${{ inputs.revision }}" \
+            --resample nearest \
+            --output artifacts/gen9-sprites-nearest.json
+
+      - name: Verify with the model's own bilinear resize
+        run: |
+          python scripts/model/verify_gen9.py \
+            --repository "${{ inputs.repository }}" \
+            --revision "${{ inputs.revision }}" \
+            --resample bilinear \
+            --output artifacts/gen9-sprites-bilinear.json
+
+      - name: Summarize
+        if: always()
+        run: |
+          python scripts/model/summarize_verification.py artifacts/gen9-sprites-*.json \
+            | tee -a "$GITHUB_STEP_SUMMARY"
+
+      - name: Upload reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: gen9-sprite-verification
+          path: artifacts/gen9-sprites-*.json
+          if-no-files-found: warn
