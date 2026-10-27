@@ -13,7 +13,7 @@ on:
     inputs:
       max_species:
         description: Highest national dex number to include
-        default: '649'
+        default: '1025'
       refresh_wiki:
         description: Re-fetch Chinese dex entries from 52poke
         type: boolean

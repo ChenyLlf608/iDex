@@ -45,11 +45,18 @@ def main() -> None:
     print(f"- 52poke community translation: **{len(community)}**")
     if WIKI.is_file():
         wiki = json.loads(WIKI.read_text(encoding="utf-8"))
-        print(f"- filled from the wiki: {wiki.get('resolved')} of {wiki.get('requested')} "
-              f"requested ({wiki.get('officialCount')} official, "
-              f"{wiki.get('communityCount')} community)")
+        print(f"- filled from the wiki: {wiki.get('descriptionsResolved')} of "
+              f"{wiki.get('descriptionsRequested')} dex entries, "
+              f"{wiki.get('genusResolved')} of {wiki.get('genusRequested')} genera")
         for failure in (wiki.get("failures") or [])[:20]:
             print(f"  - unresolved #{failure['id']}: {failure['reason']}")
+    print()
+
+    no_japanese = [e["id"] for e in entries if not e.get("japaneseDescription")]
+    print("### Japanese (not filled on purpose)")
+    print()
+    print(f"- missing dex entries: **{len(no_japanese)}**")
+    print(f"- missing genera: **{sum(1 for e in entries if not e.get('japaneseGenus'))}**")
     print()
     if community:
         shown = ", ".join(f"#{e['id']} {e['chineseName']}" for e in community[:25])

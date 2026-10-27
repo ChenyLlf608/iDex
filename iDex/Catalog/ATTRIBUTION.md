@@ -1,6 +1,6 @@
 # Offline catalog and visual assets
 
-The app bundles species 1–649, up to Genesect: the last species with a Black & White sprite, which the interface is built around. Recognition reaches all 1025 species; a scan beyond the catalog is reported as out of range rather than matched to an entry that does not exist.
+The app bundles the full national dex, species 1–1025, matching what the recognition model covers.
 
 Names, genera, English, Simplified Chinese, and Japanese Pokédex text, types, height, weight, and base stats were fetched from the PokeAPI data repository on 24 October 2026:
 
@@ -19,11 +19,24 @@ Those entries are taken from [52poke](https://wiki.52poke.com) (神奇宝贝百�
 
 52poke content is licensed **CC BY-NC-SA 3.0**, which requires attribution, prohibits commercial use, and requires derivative works to carry the same license. This attribution satisfies the first; iDex is a non-commercial fan project, which satisfies the second; the third applies to the Chinese description text sourced this way.
 
-Sprites were downloaded from the Pokémon Database's Black & White sprite archive, as requested. `Resources/sprite-sources.json` records the exact URL for every sprite. A PokeAPI sprite fallback is supported by the rebuild script for species whose Pokémon Database URL is unavailable.
+Sprites come from two archives, because official 2D pixel art stopped after Black & White. `Resources/sprite-sources.json` records the exact URL used for every sprite.
+
+Species 1–649 use the Pokémon Database's Black & White sprite archive:
 
 - https://pokemondb.net/sprites
 - https://img.pokemondb.net/sprites/black-white/normal/pikachu.png
 - Fallback source: https://github.com/PokeAPI/sprites
+
+Species 650–1025 have no official sprite in that style: *X/Y* (2013) moved to 3D models and no 2D pixel sprite was ever drawn for them. Those use the **Smogon sprite project**'s Gen-5-style artwork, as served by Pokémon Showdown:
+
+- https://play.pokemonshowdown.com/sprites/gen5/
+- Project threads and artist credits: https://smogon.com/forums/threads/3486712/
+
+These are fan drawings by many contributors, not official assets, and are used here on the same non-commercial fan-project basis as the rest of the catalog. Later species deliberately do **not** fall back to an official 3D render: one high-resolution model among pixel sprites looks worse than a loud build failure.
+
+## Japanese dex text is incomplete on purpose
+
+PokeAPI is well behind on *Scarlet/Violet* text in languages other than English. For 650–1025 it is missing the Japanese dex entry for 127 species and the Japanese genus for 112, almost all of them generation 9. Filling these would mean a second scraper against a Japanese wiki; that was weighed and declined. English is complete upstream, Simplified Chinese is completed from 52poke, and `Pokemon.description(in:)` states plainly where a Japanese entry is absent rather than showing an empty panel.
 
 Cries for every catalogued species come from [PokéAPI/cries](https://github.com/PokeAPI/cries) at commit `b3a9044bb839b5e3152aaa536c7b463a0fcf0140`, using `cries/pokemon/latest/{id}.ogg`. The upstream repository credits Pokémon Showdown, Veekun, and The Sounds Resource. `Resources/Cries/cry-sources.json` records each source URL, source and output SHA-256 hashes, species ID, and PCM frame count. The files are converted to mono 22,050 Hz, 16-bit PCM WAV without trimming or normalizing. Some upstream `.ogg` paths contain MP3 audio; conversion detects the actual format. Run `python3 scripts/audio/build_cries.py` with `ffmpeg` installed to regenerate them. The compiled app needs no decoder package or network access.
 

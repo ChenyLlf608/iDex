@@ -1,15 +1,23 @@
 #!/usr/bin/env python3
 """Rebuild the offline catalogue from cached upstream CSVs and sprites.
 
-Covers 1..649 by default. The interface is built around Black/White pixel
-sprites, and those only exist up to Genesect; recognition reaches further, so
-the app reports anything past the catalogue as out of range rather than
-inventing an entry for it.
+Covers 1..1025 by default, the full national dex, matching what the bundled
+classifier recognizes.
 
-PokeAPI carries no Simplified Chinese dex entry for 157 of those species.
-Those are filled from `wiki-descriptions.json`, which records whether each
-came from a game with an official Chinese localization or from a community
-translation. See fetch_wiki_descriptions.py.
+Sprites come from two places because official 2D pixel art stopped after
+Black/White: species up to Genesect use the Pokemon Database's Black & White
+archive, and later ones use the Smogon sprite project's Gen-5-style art as
+Pokemon Showdown serves it. Those are fan drawings, credited in ATTRIBUTION.md.
+Later species deliberately do not fall back to an official 3D render: a single
+high-resolution model among pixel sprites looks worse than a loud failure.
+
+PokeAPI carries no Simplified Chinese dex entry for several hundred of these,
+and no Chinese genus for the newest. Those are filled from
+`wiki-descriptions.json`, which records whether each came from a game with an
+official Chinese localization or from a community translation.
+
+English is complete upstream. Japanese is not, and is left incomplete on
+purpose: filling it would mean a second scraper against a different wiki.
 """
 import argparse
 import concurrent.futures
@@ -25,8 +33,9 @@ ROOT = Path(__file__).resolve().parents[2]
 CACHE = ROOT / '.catalog-cache'
 RESOURCES = ROOT / 'iDex' / 'Resources'
 WIKI_DESCRIPTIONS = Path(__file__).resolve().parent / 'wiki-descriptions.json'
-# Genesect: the last species with a Black/White sprite.
-DEFAULT_MAX_SPECIES = 649
+DEFAULT_MAX_SPECIES = 1025
+# Genesect: the last species with an official Black/White sprite.
+LAST_BLACK_WHITE = 649
 CSV_BASE = 'https://raw.githubusercontent.com/PokeAPI/pokeapi/master/data/v2/csv/'
 FILES = ['pokemon.csv', 'pokemon_species_names.csv', 'pokemon_species_flavor_text.csv', 'pokemon_types.csv', 'types.csv', 'pokemon_stats.csv', 'stats.csv']
 
@@ -51,8 +60,7 @@ def rows(file):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--max-species', type=int, default=DEFAULT_MAX_SPECIES,
-                        help='Highest national dex number to include (default: the last '
-                             'species with a Black/White sprite)')
+                        help='Highest national dex number to include')
     args = parser.parse_args()
     maximum = args.max_species
 
@@ -82,14 +90,16 @@ def main():
         ja = species_names[(number, 11)]
         slug_by_id[number] = p['identifier']
         # PokeAPI has no Chinese entry for species absent from every game it has
-        # ingested Chinese text for. Fall back to the wiki, keeping track of
-        # whether that text is an official localization or a translation.
+        # ingested Chinese text for, and no Chinese genus for the newest. Fall
+        # back to the wiki, keeping track of whether that text is an official
+        # localization or a translation.
+        supplement = wiki.get(str(number)) or {}
         chinese_description = flavor.get((number, 12))
         chinese_origin = 'official'
-        supplement = wiki.get(str(number))
-        if not chinese_description and supplement:
+        if not chinese_description and supplement.get('chineseDescription'):
             chinese_description = supplement['chineseDescription']
-            chinese_origin = 'official' if supplement['official'] else 'community'
+            chinese_origin = 'official' if supplement.get('official') else 'community'
+        chinese_genus = zh['genus'] or supplement.get('chineseGenus', '')
         entry = {
             'id': number,
             'englishName': en['name'],
@@ -98,40 +108,68 @@ def main():
             'types': [type_names[t['type_id']] for t in csvs['pokemon_types.csv'] if int(t['pokemon_id']) == number],
             'height': int(p['height']) / 10,
             'weight': int(p['weight']) / 10,
-            'englishDescription': flavor[(number, 9)],
+            'englishDescription': flavor.get((number, 9), ''),
             'chineseDescription': chinese_description,
             'chineseDescriptionOrigin': chinese_origin,
-            'japaneseDescription': flavor[(number, 11)],
+            'japaneseDescription': flavor.get((number, 11), ''),
             'englishGenus': en['genus'],
-            'chineseGenus': zh['genus'],
+            'chineseGenus': chinese_genus,
             'japaneseGenus': ja['genus'],
             'stats': [{'name': stat_names[s['stat_id']], 'value': int(s['base_stat'])} for s in csvs['pokemon_stats.csv'] if int(s['pokemon_id']) == number]
         }
         entries.append(entry)
     assert len(entries) == maximum, f'expected {maximum} entries, built {len(entries)}'
-    assert all(p['japaneseName'] and p['japaneseDescription'] and p['japaneseGenus']
-               and p['englishDescription'] and len(p['stats']) == 6 for p in entries)
+    # English is complete upstream and the app leans on it, so it stays a hard
+    # requirement. Japanese is knowingly incomplete past Sword/Shield and is
+    # only reported.
+    assert all(p['englishName'] and p['englishDescription'] and p['englishGenus']
+               and p['chineseName'] and p['japaneseName'] and len(p['stats']) == 6
+               for p in entries)
     # Name a gap rather than failing on a bare assert: the fix is to rerun
     # fetch_wiki_descriptions.py, which the message should say outright.
     untranslated = [p['id'] for p in entries if not p['chineseDescription']]
-    if untranslated:
+    unclassified = [p['id'] for p in entries if not p['chineseGenus']]
+    if untranslated or unclassified:
         raise SystemExit(
-            f'{len(untranslated)} species have no Simplified Chinese dex entry: '
-            f'{untranslated[:20]}{"..." if len(untranslated) > 20 else ""}\n'
+            f'{len(untranslated)} species have no Simplified Chinese dex entry '
+            f'{untranslated[:12]}{"..." if len(untranslated) > 12 else ""} and '
+            f'{len(unclassified)} have no Chinese genus '
+            f'{unclassified[:12]}{"..." if len(unclassified) > 12 else ""}\n'
             'Run scripts/catalog/fetch_wiki_descriptions.py to refresh '
             f'{WIKI_DESCRIPTIONS.name}, then build again.')
     community = [p['id'] for p in entries if p['chineseDescriptionOrigin'] == 'community']
+    no_japanese = [p['id'] for p in entries if not p['japaneseDescription']]
     RESOURCES.mkdir(parents=True, exist_ok=True)
     (RESOURCES / 'pokemon-catalog.json').write_text(json.dumps(entries, ensure_ascii=False, indent=2) + '\n')
     assets = RESOURCES / 'PokemonSprites.xcassets'
     assets.mkdir(exist_ok=True)
     (assets / 'Contents.json').write_text(json.dumps({'info': {'author': 'xcode', 'version': 1}}, indent=2))
+    def sprite_candidates(number, slug):
+        """URLs to try, in order, for one species.
+
+        PokeAPI's identifiers carry form suffixes (`mimikyu-disguised`), while
+        both sprite archives file art under the species name, and two-word
+        names are written solid there (`roaring-moon` is `roaringmoon`). Try
+        every spelling rather than maintaining an exception list.
+        """
+        spellings = []
+        for candidate in (slug, slug.replace('-', ''), slug.split('-')[0]):
+            if candidate and candidate not in spellings:
+                spellings.append(candidate)
+        if number <= LAST_BLACK_WHITE:
+            urls = [f'https://img.pokemondb.net/sprites/black-white/normal/{s}.png'
+                    for s in spellings]
+            # Official art exists for these, so a PokeAPI render is an
+            # acceptable last resort at the same pixel scale.
+            urls.append(f'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/{number}.png')
+            return urls
+        return [f'https://play.pokemonshowdown.com/sprites/gen5/{s}.png' for s in spellings]
+
     def sprite(p):
         number = p['id']
         asset = assets / f'pokemon-{number:03d}.imageset'
         path = asset / 'sprite.png'
-        slug = slug_by_id[number]
-        urls = [f'https://img.pokemondb.net/sprites/black-white/normal/{slug}.png', f'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/{number}.png']
+        urls = sprite_candidates(number, slug_by_id[number])
         for source in urls:
             try:
                 data = download(source, path)
@@ -168,6 +206,7 @@ def main():
           f'and {len(sources)} sprites.')
     print(f'Chinese dex entries: {len(entries) - len(community)} official, '
           f'{len(community)} community translation.')
+    print(f'Japanese dex entries missing (not filled on purpose): {len(no_japanese)}.')
     print('Pikachu:', entries[24])
     print('Fonts:', [p.name for p in font_dir.iterdir()])
 

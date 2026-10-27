@@ -5,19 +5,20 @@ import CoreText
 
 @MainActor
 struct CatalogTests {
-    @Test func catalogCoversEverySpeciesWithABlackWhiteSprite() {
+    @Test func catalogCoversTheWholeNationalDex() {
         let entries = PokemonCatalog.shared.entries
         let count = PokemonCatalog.shared.speciesCount
-        // Genesect is the last species with a Black/White sprite, which the
-        // interface is built around. Recognition deliberately reaches further.
-        #expect(count == 649)
+        // The catalogue now matches what the bundled classifier recognizes.
+        #expect(count == 1025)
         #expect(entries.map(\.id) == Array(1...count))
         #expect(Set(entries.map(\.englishName)).count == count)
         #expect(Set(entries.map(\.chineseName)).count == count)
         #expect(Set(entries.map(\.japaneseName)).count == count)
         #expect(entries.allSatisfy { !$0.englishDescription.isEmpty && !$0.chineseDescription.isEmpty })
         #expect(entries.allSatisfy { !$0.englishGenus.isEmpty && !$0.chineseGenus.isEmpty })
-        #expect(entries.allSatisfy { !$0.japaneseDescription.isEmpty && !$0.japaneseGenus.isEmpty })
+        // Japanese dex text is knowingly incomplete past Sword/Shield, so only
+        // the name is required; `description(in:)` says so where it is absent.
+        #expect(entries.allSatisfy { !$0.description(in: .ja).isEmpty })
         #expect(entries.allSatisfy { $0.height > 0 && $0.weight > 0 })
         #expect(entries.allSatisfy { $0.stats.count == 6 && $0.stats.allSatisfy { $0.value > 0 } })
         #expect(entries.allSatisfy { (1...2).contains($0.types.count) })

@@ -82,7 +82,7 @@ struct SettingsSheet: View {
                     Label(store.text("Point at a Pokémon, then identify.", "将取景器对准宝可梦，轻点识别。", "ポケモンにカメラを向けて、スキャンします。"), systemImage: "viewfinder")
                     Label(store.text("Unfold to reveal the research panel.", "展开屏幕，查看内部研究面板。", "画面を開くと、リサーチパネルが表示されます。"), systemImage: "book")
                     Label(store.text("Photos and recognition stay on your iPhone.", "照片与识别过程均留在你的 iPhone 上。", "写真と識別処理は、すべて iPhone 内で完結します。"), systemImage: "lock.shield")
-                    Text(store.text("The bundled model recognizes all 1025 Pokémon; this archive holds the \(PokemonCatalog.shared.speciesCount) with Black/White sprites, and says so when a scan falls outside it. Uncertain scans ask you to try again. Samples use the same model as your camera.", "内置模型可识别全部1025种宝可梦；本图鉴收录其中拥有黑白版图像的\(PokemonCatalog.shared.speciesCount)种，扫描到收录范围外时会如实告知。匹配不确定时会提示重试。样本与相机使用相同的识别模型。", "内蔵モデルは1025種すべてを識別します。この図鑑には、ブラック・ホワイトのドット絵がある\(PokemonCatalog.shared.speciesCount)種を収録しており、範囲外は収録外として表示します。結果が不確かな場合は、再スキャンをお試しください。サンプルとカメラは同じ識別モデルを使います。"))
+                    Text(store.text("The bundled model recognizes all 1025 Pokémon, and the archive holds every one of them. Uncertain scans ask you to try again. Samples use the same model as your camera.", "内置模型可识别全部1025种宝可梦，本图鉴也已全部收录。匹配不确定时会提示重试。样本与相机使用相同的识别模型。", "内蔵モデルは1025種すべてを識別し、この図鑑にもすべて収録しています。結果が不確かな場合は、再スキャンをお試しください。サンプルとカメラは同じ識別モデルを使います。"))
                         .font(.footnote).foregroundStyle(.secondary)
                 }
                 Section(store.text("Credits", "制作信息", "クレジット")) {

@@ -90,7 +90,15 @@ struct Pokemon: Identifiable, Codable, Hashable {
     }
 
     func description(in language: AppLanguage) -> String {
-        language.text(englishDescription, chineseDescription, japaneseDescription)
+        let text = language.text(englishDescription, chineseDescription, japaneseDescription)
+        guard text.isEmpty else { return text }
+        // Japanese is knowingly incomplete past Sword/Shield: PokeAPI has not
+        // ingested that text and filling it would mean a second scraper.
+        // English is complete and Chinese is filled from the wiki, so this is
+        // the honest thing to show rather than an empty panel.
+        return language.text("No Pokédex entry is bundled for this species.",
+                             "本图鉴暂未收录该宝可梦的说明。",
+                             "この図鑑には、このポケモンの説明が収録されていません。")
     }
 
     /// True when the text shown is a community translation rather than an
